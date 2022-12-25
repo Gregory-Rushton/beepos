@@ -1,11 +1,13 @@
 import './Header.css';
 import { useState } from 'react';
-
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import 'react-tabs/style/react-tabs.css';
+import { Database, Auth } from "../lib/ajax.js";
+import * as utils from "../lib/utils";
 
 import Home from './Home';
 import {Honey, Items} from './Shop';
+import { findRenderedComponentWithType } from 'react-dom/test-utils';
 
 function Header() {
 
@@ -15,6 +17,11 @@ function Header() {
         console.log(index);
         setTabIndex(index);
     }
+
+    const load = async() => {
+        utils.user = await Auth.getUser();
+    }
+    load();
 
     return (
         <div className='header'>
