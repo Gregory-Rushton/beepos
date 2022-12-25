@@ -19,7 +19,6 @@ function Header() {
     }
 
     const load = async() => {
-        utils.user = await Auth.getUser();
     }
     load();
 
