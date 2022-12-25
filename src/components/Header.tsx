@@ -5,7 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import 'react-tabs/style/react-tabs.css';
 
 import Home from './Home';
-import Honey from './Honey';
+import {Honey, Items} from './Shop';
 
 function Header() {
 
@@ -29,7 +29,7 @@ function Header() {
 
                 <TabPanel><Home/></TabPanel>
                 <TabPanel><Honey/></TabPanel>
-                <TabPanel></TabPanel>
+                <TabPanel><Items/></TabPanel>
                 <TabPanel></TabPanel>
             </Tabs>
 
