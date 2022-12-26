@@ -7,12 +7,10 @@ interface Product {
     location: string,
     imageURL: string,
     stock: number,
-    relations: JSON
+    relations: Object
 }
 
-interface ProductList {
-    products: Product[]
-}
+
 
 interface User {
     ID: string,
@@ -24,7 +22,15 @@ interface User {
     permissions: string
 }
 
+export function setUser(userJson: Object) {
+    user = <User>(userJson);
+}
+
+export function setProductList(productListJson: Object) {
+    productList = productListJson;
+}
+
 export let user: User;
-export let productList: ProductList;
+export let productList: Object;// = {1: 1};
 
 

@@ -2,25 +2,29 @@ import './Header.css';
 import { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import 'react-tabs/style/react-tabs.css';
+
+
 import { Database, Auth } from "../lib/ajax.js";
 import * as utils from "../lib/utils";
 
+
+
 import Home from './Home';
 import {Honey, Items} from './Shop';
-import { findRenderedComponentWithType } from 'react-dom/test-utils';
 
 function Header() {
-
+    
     const [tabIndex, setTabIndex] = useState(0);
-
+    
     const loadTab = (index: number) => {
-        console.log(index);
         setTabIndex(index);
     }
-
-    const load = async() => {
+    
+    const loadSiteData = async() => { //not sure if this is the best place for this
+        utils.setUser((await Auth.getUser())["response"]);
+        utils.setProductList((await Database.getProducts())["response"]["products"]);
     }
-    load();
+    loadSiteData();
 
     return (
         <div className='header'>
