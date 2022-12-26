@@ -1,5 +1,5 @@
 import internal from "stream";
-import {Database} from "./ajax.js";
+import { Auth, Database } from "./ajax.js";
 
 interface Product {
     name: string,
@@ -9,8 +9,6 @@ interface Product {
     stock: number,
     relations: Object
 }
-
-
 
 interface User {
     ID: string,
@@ -22,8 +20,13 @@ interface User {
     permissions: string
 }
 
-export function setUser(userJson: Object) {
-    user = <User>(userJson);
+export async function setUser() {
+
+    let response = {"response": {}}
+    try {
+        response = await Auth.getUser();
+    } catch {}
+    user = <User>(response["response"]);
 }
 
 export function setProductList(productListJson: Object) {
