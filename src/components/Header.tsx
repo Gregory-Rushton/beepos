@@ -1,5 +1,5 @@
 import './Header.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import 'react-tabs/style/react-tabs.css';
 
@@ -19,17 +19,16 @@ function Header() {
         setTabIndex(index);
     }
     
-    const loadSiteData = async() => { //not sure if this is the best place for this
-        await utils.setUser();
-        utils.setProductList((await Database.getProducts())["response"]["products"]);
-        if(utils.user.ID != undefined) {
-            console.log("update");
-            setProfilePicUrl(utils.user.pfpURL);
+    useEffect(() => {
+        const init = async() => {
+            await utils.setUser();
+            await utils.setProductList();
+            if(utils.user.ID != undefined) {
+                setProfilePicUrl(utils.user.pfpURL);
+            }
         }
-    }
-    loadSiteData();
-
-
+        init();
+    }, []);
 
     return (
         <div>

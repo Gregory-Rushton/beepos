@@ -1,22 +1,23 @@
 import {useEffect, useState} from "react";
 import {Database} from '../lib/ajax';
-
+import * as utils from "../lib/utils";
 //The honey and items shop code is too similar it can be put into one file
 
 
 async function createHTML(location: string) {
-    console.log(await Database.getProducts(location));
+    console.log(utils.getProductsByLocation(location));
 }
 
 export function Honey() {
 
     const [content, setContent] = useState("");
 
+    createHTML("honey");
+
+
     useEffect(() => {
         const init = async () => {
-            const response = await Database.getProducts("null");//createHTML("honey");
-            setContent(JSON.stringify(response));
-            console.log(content);
+
         };
         init();
     });
@@ -30,6 +31,8 @@ export function Honey() {
 
 
 export function Items() {
+
+    createHTML("items");
 
     return (
         <div>

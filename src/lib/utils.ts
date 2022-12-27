@@ -1,6 +1,5 @@
 import internal from "stream";
 import { Auth, Database } from "./ajax.js";
-
 interface Product {
     name: string,
     description: string,
@@ -20,8 +19,11 @@ interface User {
     permissions: string
 }
 
-export async function setUser() {
+export let user: User;
+export let productList: Product[] = [];
 
+
+export async function setUser() {
     let response = {"response": {}}
     try {
         response = await Auth.getUser();
@@ -29,11 +31,22 @@ export async function setUser() {
     user = <User>(response["response"]);
 }
 
-export function setProductList(productListJson: Object) {
-    productList = productListJson;
+export async function setProductList() {
+    let productListArray: Object[] = (await Database.getProducts())["response"]["products"];
+    for(let element in productListArray) {
+        productList[element] = ( <Product>( productListArray[element] ) );
+    }
 }
 
-export let user: User;
-export let productList: Object;// = {1: 1};
+export function getProductsByLocation(location: string) {
+    let products: Product[] = [];
+    productList.forEach(element => {
+        if(element.location == location) {
+            products.push(element);
+        }
+    });
+    return products;
+}
+
 
 
