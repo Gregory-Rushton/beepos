@@ -1,0 +1,11 @@
+.tableLeft {
+    position: absolute; 
+    left: 50%; 
+    transform: translate(-110%, 0%); 
+}
+
+.tableRight {
+    position: absolute; 
+    left: 50%; 
+    transform: translate(10%, 0%); 
+}
