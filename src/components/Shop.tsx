@@ -6,11 +6,18 @@ import * as utils from "../lib/utils";
 //The honey and items shop code is too similar it can be put into one file
 
 
-function createHTML(item: utils.Product, position: number) {
+function CreateHTML(item: utils.Product, position: number) {
+
+    const [price, setPrice] = useState(0.0);
+    const [imageURL, setImageURL] = useState("");
     
-    let inlineStyles = { //purely used for positioning the element
-        transform: `translate(${position%2==0 ? "-110%" : "10%"}%, ${position%2 * 110}%)`,
+    const updateItemInfo = (item: utils.Product) => {
     }
+
+    let inlineStyles = { //purely used for positioning the element. I use absolute positioning because its easier.
+        transform: `translate(${position%2==0 ? "-110" : "10"}%, ${Math.floor(position/2) * 110 + 10}%)`,
+    }
+
     
     return (
         <table className="table" style={inlineStyles}> 
@@ -21,7 +28,7 @@ function createHTML(item: utils.Product, position: number) {
                 </tr>
 
                 <tr>
-                    <td> <label>Price</label> <br/><br/><br/> </td> 
+                    <td style={{verticalAlign: "top"}}> <label>{price}</label>  </td> 
                 </tr>
 
                 <tr style={{verticalAlign: "bottom"}}>
@@ -37,7 +44,7 @@ function createHTML(item: utils.Product, position: number) {
                 <tr style={{textAlign: 'right'}}>
                     <td></td>
                     <td>
-                        <button className="buyButton"> Add to Cart</button>
+                        <button onClick={() => (console.log("pressed buy"))} className="buyButton"> Add to Cart</button>
                     </td>
                 </tr>
 
@@ -46,35 +53,26 @@ function createHTML(item: utils.Product, position: number) {
     );
 }
 
-function createAllHTML(location: string) {
+function CreateAllHTML(location: string) {
     let productsOnPage: utils.Product[] = utils.getProductsByLocation(location);
-    let allHTML = "";
+    
+    let allHTML: JSX.Element[] = [];
 
-    productsOnPage.forEach((element) => {
-        allHTML += createHTML(element, 0);
-    })
-
-    return allHTML;
+    for(let element in productsOnPage) {
+        allHTML.push(CreateHTML(productsOnPage[element], parseInt(element)));
+    }
+    return (
+        <div>
+            {allHTML}
+        </div>
+    );
 }
 
 export function Honey() {
-
-    const [content, setContent] = useState("");
-
-    
-    
-    return (createHTML(utils.productList[1], 0));
+    return (CreateAllHTML("honey"));
 }
 
 
 export function Items() {
-    
-    const [content, setContent] = useState();
-
-
-    return (
-        <div>
-            <h1>Items</h1>
-        </div>
-    )
+    return (CreateAllHTML("items"))
 }

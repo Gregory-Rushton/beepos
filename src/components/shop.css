@@ -1,31 +1,31 @@
 .table {
-    padding: 1%;
+    padding: 15px;
     background-color: #DDD;
-    border: 1px solid red;
     position: absolute; 
     left: 50%;
-    width: 20%;
+    width: 375px;
+    height: 375px;
     text-align: left;
 }
 
 .itemTitleRow {
     vertical-align: top;
     text-align: left;
-    line-height: 25.6px;
+    line-height: 25px;
 }
 
 .itemImage {
-    width: 180px;
-    height: 180px;
+    width:  140px;
+    height: 140px;
 }
 
 .itemNameLabel {
-    padding: 3%;
+    padding: 5px;
     font-size: 140%;
 }
 
 .itemDescriptionLabel {
-    padding: 3%;
+    padding: 5px;
     font-size: 100%;
 }
 
