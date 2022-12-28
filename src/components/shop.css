@@ -1,11 +1,38 @@
-.tableLeft {
+.table {
+    padding: 1%;
+    background-color: #DDD;
+    border: 1px solid red;
     position: absolute; 
-    left: 50%; 
-    transform: translate(-110%, 0%); 
+    left: 50%;
+    width: 20%;
+    text-align: left;
 }
 
-.tableRight {
-    position: absolute; 
-    left: 50%; 
-    transform: translate(10%, 0%); 
+.itemTitleRow {
+    vertical-align: top;
+    text-align: left;
+    line-height: 25.6px;
+}
+
+.itemImage {
+    width: 180px;
+    height: 180px;
+}
+
+.itemNameLabel {
+    padding: 3%;
+    font-size: 140%;
+}
+
+.itemDescriptionLabel {
+    padding: 3%;
+    font-size: 100%;
+}
+
+.quantityBox {
+    width: 25px;
+}
+
+.buyButton {
+    width: 60%;
 }
