@@ -24,8 +24,6 @@ function Header() {
             await utils.setUser();
             await utils.setProductList();
             await utils.loadCart();
-            utils.setCartEntry("200", "300", 7);
-            await utils.saveCart();
             if(utils.user.ID != undefined) {
                 setProfilePicUrl(utils.user.pfpURL);
             }
