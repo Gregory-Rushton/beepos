@@ -9,26 +9,37 @@ import * as utils from "../lib/utils";
 function CreateHTML(item: utils.Product, position: number) {
 
     const [price, setPrice] = useState(0.0);
-    const [imageURL, setImageURL] = useState("");
-    
+    const [imageURL, setImageURL] = useState(item.imageURL);
+    const [quantity, setQuantity] = useState(0);
+
+    const handleCountChange = (event: any) => {
+        setQuantity(event.target.value);
+    }
+
     const updateItemInfo = (item: utils.Product) => {
+    }
+
+    const addToCart = () => {
+
     }
 
     let inlineStyles = { //purely used for positioning the element. I use absolute positioning because its easier.
         transform: `translate(${position%2==0 ? "-110" : "10"}%, ${Math.floor(position/2) * 110 + 10}%)`,
     }
 
+
+
     
     return (
-        <table className="table" style={inlineStyles}> 
+        <table className="table" style={inlineStyles} key={item.id}> 
             <tbody>
                 <tr className="itemTitleRow">
-                    <td className="itemImage"> <img src={item.imageURL} className="itemImage"/> </td>
+                    <td className="itemImage"> <img src={imageURL} className="itemImage"/> </td>
                     <td> <label className="itemNameLabel">{item.name}</label> <br/> <label className="itemDescriptionLabel">{item.description}</label></td>
                 </tr>
 
                 <tr>
-                    <td style={{verticalAlign: "top"}}> <label>{price}</label>  </td> 
+                    <td style={{verticalAlign: "top"}}> <label>${price}</label>  </td> 
                 </tr>
 
                 <tr style={{verticalAlign: "bottom"}}>
@@ -37,14 +48,14 @@ function CreateHTML(item: utils.Product, position: number) {
                     </td>
 
                     <td style={{textAlign: 'right'}}>
-                        <input className="quantityBox"/> Quantity
+                        <input onChange={event => handleCountChange(event)} type="number" className="quantityBox"/> Quantity
                     </td>
                 </tr>
 
                 <tr style={{textAlign: 'right'}}>
                     <td></td>
                     <td>
-                        <button onClick={() => (console.log("pressed buy"))} className="buyButton"> Add to Cart</button>
+                        <button onClick={(element) => {addToCart();}} className="buyButton"> Add to Cart</button>
                     </td>
                 </tr>
 

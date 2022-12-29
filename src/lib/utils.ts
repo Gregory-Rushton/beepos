@@ -1,6 +1,7 @@
 import internal from "stream";
 import { Auth, Database } from "./ajax.js";
 export interface Product {
+    id: string,
     name: string,
     description: string,
     location: string,
