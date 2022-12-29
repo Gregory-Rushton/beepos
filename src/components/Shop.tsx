@@ -11,24 +11,51 @@ function CreateHTML(item: utils.Product, position: number) {
     const [price, setPrice] = useState(0.0);
     const [imageURL, setImageURL] = useState(item.imageURL);
     const [quantity, setQuantity] = useState(0);
+    const [selectedSubProduct, setSelectedSubProduct] = useState("");
 
     const handleCountChange = (event: any) => {
         setQuantity(event.target.value);
     }
 
-    const updateItemInfo = (item: utils.Product) => {
+    const updateItemInfo = (value: any) => {
+        setSelectedSubProduct(value.target.value);
+        let related: keyof typeof item.relations = value.target.value;
+        let relation: utils.Relation = utils.createRelation(item.relations[related]);
+        setPrice(relation.price);
+        setImageURL(relation.imageURL);
     }
 
     const addToCart = () => {
 
     }
 
+    
+    let dropdownHTML: JSX.Element[] = [];
+    
+    // let relation: keyof typeof item.relations; //Typescript moment, needed to iterate over a json object
+    for(let relation in item.relations) {
+        dropdownHTML.push(<option key={relation} value={relation}> {utils.getProduct(relation).name} </option>);
+    }
+
+    let subProductHTML: JSX.Element = (
+        <form>
+            Size: &nbsp;
+            <select onChange={value => updateItemInfo(value)}>
+                {dropdownHTML}
+            </select>
+        </form>
+    );
+
     let inlineStyles = { //purely used for positioning the element. I use absolute positioning because its easier.
         transform: `translate(${position%2==0 ? "-110" : "10"}%, ${Math.floor(position/2) * 110 + 10}%)`,
     }
 
 
-
+    useEffect(() => {
+        let firstRelation: keyof typeof item.relations = dropdownHTML[0].props.value;
+        let relation: utils.Relation = utils.createRelation(item.relations[firstRelation]);
+        setPrice(relation.price);
+    }, []);
     
     return (
         <table className="table" style={inlineStyles} key={item.id}> 
@@ -39,12 +66,12 @@ function CreateHTML(item: utils.Product, position: number) {
                 </tr>
 
                 <tr>
-                    <td style={{verticalAlign: "top"}}> <label>${price}</label>  </td> 
+                    <td style={{verticalAlign: "top"}}> <label>${price.toFixed(2)}</label>  </td> 
                 </tr>
 
                 <tr style={{verticalAlign: "bottom"}}>
                     <td>
-                        Subproduct HTML
+                        {dropdownHTML.length ==  1 ? null : subProductHTML}
                     </td>
 
                     <td style={{textAlign: 'right'}}>

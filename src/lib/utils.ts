@@ -7,7 +7,12 @@ export interface Product {
     location: string,
     imageURL: string,
     stock: number,
-    relations: Object
+    relations: JSON
+}
+
+export interface Relation {
+    price: number;
+    imageURL: string;
 }
 
 export interface User {
@@ -34,9 +39,20 @@ export async function setUser() {
 
 export async function setProductList() {
     let productListArray: Object[] = (await Database.getProducts())["response"]["products"];
+    
     for(let element in productListArray) {
         productList[element] = ( <Product>( productListArray[element] ) );
     }
+
+}
+
+export function getProduct(id: string) {
+    for(let element in productList) {
+        if(productList[element].id == id) {
+            return productList[element];
+        }
+    }
+    return <Product>({});
 }
 
 export function getProductsByLocation(location: string) {
@@ -49,5 +65,6 @@ export function getProductsByLocation(location: string) {
     return products;
 }
 
-
-
+export function createRelation(relation: Object) {
+    return (<Relation>( relation ));
+}
