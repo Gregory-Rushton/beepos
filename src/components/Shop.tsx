@@ -30,9 +30,8 @@ function CreateHTML(item: utils.Product, position: number) {
     }
 
     
-    let dropdownHTML: JSX.Element[] = [];
     
-    // let relation: keyof typeof item.relations; //Typescript moment, needed to iterate over a json object
+    let dropdownHTML: JSX.Element[] = [];
     for(let relation in item.relations) {
         dropdownHTML.push(<option key={relation} value={relation}> {utils.getProduct(relation).name} </option>);
     }
