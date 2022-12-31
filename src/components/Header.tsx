@@ -14,6 +14,11 @@ function Header() {
     
     const [tabIndex, setTabIndex] = useState(0);
     const [profilePicUrl, setProfilePicUrl] = useState("https://cdn.beepositiveapiary.com/account/pfp.png");
+    const [dropdownHTML, setDropdownHTML] = useState([<a></a>]);
+     
+    const reloadDropdownHMTL = () => {
+        setDropdownHTML(utils.cartAsDropdown());
+    }
 
     const loadTab = (index: number) => {
         setTabIndex(index);
@@ -53,12 +58,9 @@ function Header() {
             <img src={profilePicUrl} className="profileIcon"></img>
 
             <div className="dropdown">
-                <button className="dropbtn">Cart</button>
+                <button onMouseEnter={reloadDropdownHMTL} className="dropbtn">Cart</button>
                 <div className="dropdown-content">
-                    {}
-                    
-                    {/* <a href="about:blank">test</a> */}
-
+                    {dropdownHTML}
                 </div>
             </div>
 

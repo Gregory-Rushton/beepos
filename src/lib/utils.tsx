@@ -1,3 +1,4 @@
+import { create } from "domain";
 import internal from "stream";
 import { createObjectBindingPattern } from "typescript";
 import { Auth, Database } from "./ajax.js";
@@ -81,6 +82,22 @@ export function createRelation(relation: Object) {
     return relation as Relation;
 }
 
+export function getRelation(id: string, subProductID: string) {
+    let product = getProduct(id);
+    return product.relations[subProductID as keyof typeof product.relations] as Object as Relation;
+}
+
+export function createProductString(productString: string, cartItem: CartItem) {
+    let product: Product = getProduct(cartItem.ID);
+    let subProduct: Product = getProduct(cartItem.subProductID);
+    let price = console.log(getRelation(cartItem.ID, cartItem.subProductID).price);
+    productString = productString.replace("{product}", product.name);
+    productString = productString.replace("{subProduct}", subProduct.name);
+    // productString.replace("{price}", price);
+    
+    return productString;
+}
+
 export function loadCart() {
     
     let cartString: string | null = localStorage.getItem("cart");
@@ -93,8 +110,6 @@ export function loadCart() {
         for(let i in cartObject) {
             cart[i] =  (cartObject[i] as Object) as CartItem;
         }
-
-        console.log(cart);
 
     } catch (error) {
         console.log("Errored loading cart, creating a new one");
@@ -128,6 +143,7 @@ export function saveCart() {
 export function cartAsDropdown() {
     let html: JSX.Element[] = [];
     for(let i in cart) {
-        html[i] = <table></table>;
+        html[i] = <a>{createProductString("{product}, {subProduct}", cart[i])}</a>;
     }
+    return html;
 }
