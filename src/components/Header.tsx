@@ -51,6 +51,18 @@ function Header() {
 
             </div>
             <img src={profilePicUrl} className="profileIcon"></img>
+
+            <div className="dropdown">
+                <button className="dropbtn">Cart</button>
+                <div className="dropdown-content">
+                    {}
+                    
+                    {/* <a href="about:blank">test</a> */}
+
+                </div>
+            </div>
+
+
         </div>
     );
 

@@ -29,7 +29,7 @@ export interface User {
 }
 
 //for the shopping cart info
-export interface cartItem {
+export interface CartItem {
     ID: string,
     subProductID: string,
     amount: number
@@ -39,21 +39,21 @@ export interface cartItem {
 
 export let user: User;
 export let productList: Product[] = [];
-export let cart: cartItem[] = [];
+export let cart: CartItem[] = [];
 
 export async function setUser() {
     let response = {"response": {}}
     try {
         response = await Auth.getUser();
     } catch {}
-    user = <User>(response["response"]);
+    user = (response["response"]) as User;
 }
 
 export async function setProductList() {
     let productListArray: Object[] = (await Database.getProducts())["response"]["products"];
     
     for(let element in productListArray) {
-        productList[element] = ( <Product>( productListArray[element] ) );
+        productList[element] = productListArray[element] as Product;
     }
 
 }
@@ -64,7 +64,7 @@ export function getProduct(id: string) {
             return productList[element];
         }
     }
-    return <Product>({});
+    return {} as Product;
 }
 
 export function getProductsByLocation(location: string) {
@@ -78,7 +78,7 @@ export function getProductsByLocation(location: string) {
 }
 
 export function createRelation(relation: Object) {
-    return (<Relation>( relation ));
+    return relation as Relation;
 }
 
 export function loadCart() {
@@ -91,7 +91,7 @@ export function loadCart() {
         let cartObject: JSON[] = JSON.parse(cartString)['Items'];
         
         for(let i in cartObject) {
-            cart[i] =  <cartItem>(<Object>(cartObject[i]));
+            cart[i] =  (cartObject[i] as Object) as CartItem;
         }
 
         console.log(cart);
@@ -104,18 +104,18 @@ export function loadCart() {
     }
 }
 
-export function setCartEntry(ID: string, subProductID: string, amount: number) {
+export function addToCart(ID: string, subProductID: string, amount: number) {
 
     for(let item in cart) {
-        console.log(cart[item]);
         if(cart[item].ID == ID && cart[item].subProductID == subProductID) {
-            cart[item].amount = amount;
+            cart[item].amount += amount;
             return;
         }
     }
 
-    cart.push(<cartItem>({"ID": ID, "subProductID": subProductID, "amount": amount}));
+    cart.push({"ID": ID, "subProductID": subProductID, "amount": amount} as CartItem);
 }
+
 
 export function saveCart() {
     let cartString: Object[] = [];
@@ -123,4 +123,11 @@ export function saveCart() {
         cartString[i] = {"ID": cart[i].ID, "subProductID": cart[i].subProductID, "amount": cart[i].amount};
     }
     localStorage.setItem("cart", `{"Items": ${JSON.stringify(cartString)}}`)
+}
+
+export function cartAsDropdown() {
+    let html: JSX.Element[] = [];
+    for(let i in cart) {
+        html[i] = <table></table>;
+    }
 }

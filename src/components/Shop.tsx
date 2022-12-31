@@ -14,7 +14,7 @@ function CreateHTML(item: utils.Product, position: number) {
     const [selectedSubProduct, setSelectedSubProduct] = useState("");
 
     const handleCountChange = (event: any) => {
-        setQuantity(event.target.value);
+        setQuantity( Math.max(parseInt(event.target.value), 1) );
     }
 
     const updateItemInfo = (value: any) => {
@@ -26,7 +26,8 @@ function CreateHTML(item: utils.Product, position: number) {
     }
 
     const addToCart = () => {
-
+        utils.addToCart(item.id, selectedSubProduct, Math.max(quantity, 1));
+        utils.saveCart();
     }
 
     
@@ -54,6 +55,7 @@ function CreateHTML(item: utils.Product, position: number) {
         let firstRelation: keyof typeof item.relations = dropdownHTML[0].props.value;
         let relation: utils.Relation = utils.createRelation(item.relations[firstRelation]);
         setPrice(relation.price);
+        setSelectedSubProduct(firstRelation.toString());
     }, []);
     
     return (
