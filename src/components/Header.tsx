@@ -16,16 +16,8 @@ function Header() {
         setTabIndex(index);
     }
 
-    useEffect(() => {
-        const init = async () => {
-            await utils.setUser();
-            await utils.setProductList();
-        }
-        init();
-    }, []);
-
-    return (
-        <div>
+    const googleSignIn = () => {
+        return <div style={{position: 'absolute', top: '10px', left: '10px'}}>
             <GoogleLogin
                 onSuccess={credentialResponse => {
                     interface Credential {
@@ -40,6 +32,19 @@ function Header() {
                     console.log('Login Failed');
                 }}
             />
+        </div>
+    }
+
+    useEffect(() => {
+        const init = async () => {
+            await utils.setUser();
+            await utils.setProductList();
+        }
+        init();
+    }, []);
+
+    return (
+        <div>
             <div className='header'>
                 <h1>Bee Positive Apiary</h1>
                 <Tabs selectedIndex={tabIndex} onSelect={(index) => loadTab(index)}>
@@ -55,8 +60,8 @@ function Header() {
                     <TabPanel><Items/></TabPanel>
                     <TabPanel></TabPanel>
                 </Tabs>
-
             </div>
+            {googleSignIn()}
         </div>
     );
 
