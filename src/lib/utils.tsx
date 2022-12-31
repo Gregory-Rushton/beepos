@@ -1,6 +1,3 @@
-import { create } from "domain";
-import internal from "stream";
-import { createObjectBindingPattern } from "typescript";
 import { Auth, Database } from "./ajax.js";
 
 //For products, relations, and the logged in user. Mostly static
