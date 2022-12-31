@@ -15,7 +15,9 @@ function Header() {
     const [tabIndex, setTabIndex] = useState(0);
     const [profilePicUrl, setProfilePicUrl] = useState("https://cdn.beepositiveapiary.com/account/pfp.png");
     const [dropdownHTML, setDropdownHTML] = useState([<a></a>]);
-     
+    
+    document.title = "Bee Positive Apiary"
+
     const reloadDropdownHMTL = () => {
         setDropdownHTML(utils.cartAsDropdown());
     }

@@ -93,7 +93,7 @@ export function createProductString(productString: string, cartItem: CartItem) {
     productString = productString.replace("{price}", price.toString());
     productString = productString.replace("{description}", product.description);
     productString = productString.replace("{amount}", cartItem.amount.toString());
-    productString = productString.replace("{fullPrice}", (price*cartItem.amount).toString())
+    productString = productString.replace("{fullPrice}", (price*cartItem.amount).toFixed(2).toString())
 
     
     return productString;
