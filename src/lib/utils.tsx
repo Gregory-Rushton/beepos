@@ -90,10 +90,14 @@ export function getRelation(id: string, subProductID: string) {
 export function createProductString(productString: string, cartItem: CartItem) {
     let product: Product = getProduct(cartItem.ID);
     let subProduct: Product = getProduct(cartItem.subProductID);
-    let price = console.log(getRelation(cartItem.ID, cartItem.subProductID).price);
+    let price: number = getRelation(cartItem.ID, cartItem.subProductID).price;
     productString = productString.replace("{product}", product.name);
     productString = productString.replace("{subProduct}", subProduct.name);
-    // productString.replace("{price}", price);
+    productString = productString.replace("{price}", price.toString());
+    productString = productString.replace("{description}", product.description);
+    productString = productString.replace("{amount}", cartItem.amount.toString());
+    productString = productString.replace("{fullPrice}", (price*cartItem.amount).toString())
+
     
     return productString;
 }
@@ -143,7 +147,7 @@ export function saveCart() {
 export function cartAsDropdown() {
     let html: JSX.Element[] = [];
     for(let i in cart) {
-        html[i] = <a>{createProductString("{product}, {subProduct}", cart[i])}</a>;
+        html[i] = <a>{createProductString("{amount}x {subProduct} of {product} (${fullPrice})", cart[i])}</a>;
     }
     return html;
 }
