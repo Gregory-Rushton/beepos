@@ -6,6 +6,7 @@ import * as utils from "../lib/utils";
 import Home from './Home';
 import {Honey, Items} from './Shop';
 import {GoogleLogin} from "@react-oauth/google";
+import jwtDecode from "jwt-decode";
 
 function Header() {
 
@@ -31,7 +32,13 @@ function Header() {
         <div>
             <GoogleLogin
                 onSuccess={credentialResponse => {
-                    console.log(credentialResponse);
+                    interface Credential {
+                        clientId: string;
+                        credential: string;
+                        select_by: string;
+                    }
+                    const credential = jwtDecode<Credential>((credentialResponse as Credential).credential);
+                    console.log(credential);
                 }}
                 onError={() => {
                     console.log('Login Failed');
