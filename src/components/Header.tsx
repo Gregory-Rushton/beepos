@@ -7,6 +7,7 @@ import Home from './Home';
 import {Honey, Items} from './Shop';
 import {GoogleLogin} from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
+import {Credential} from '../models/Credential';
 
 function Header() {
 
@@ -20,11 +21,6 @@ function Header() {
         return <div style={{position: 'absolute', top: '10px', left: '10px'}}>
             <GoogleLogin
                 onSuccess={credentialResponse => {
-                    interface Credential {
-                        clientId: string;
-                        credential: string;
-                        select_by: string;
-                    }
                     const credential = jwtDecode<Credential>((credentialResponse as Credential).credential);
                     console.log(credential);
                 }}
