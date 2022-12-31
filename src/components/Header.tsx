@@ -11,7 +11,6 @@ import jwtDecode from "jwt-decode";
 function Header() {
 
     const [tabIndex, setTabIndex] = useState(0);
-    const [profilePicUrl, setProfilePicUrl] = useState("https://cdn.beepositiveapiary.com/account/pfp.png");
 
     const loadTab = (index: number) => {
         setTabIndex(index);
@@ -21,9 +20,6 @@ function Header() {
         const init = async () => {
             await utils.setUser();
             await utils.setProductList();
-            if (utils.user.ID != undefined) {
-                setProfilePicUrl(utils.user.pfpURL);
-            }
         }
         init();
     }, []);
