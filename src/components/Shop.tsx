@@ -50,7 +50,7 @@ function CreateHTML(item: Product, position: number) {
     );
 
     let inlineStyles = { //purely used for positioning the element. I use absolute positioning because its easier.
-        transform: `translate(${position % 2 == 0 ? "-110" : "10"}%, ${Math.floor(position / 2) * 110 + 10}%)`,
+        transform: `translate(${position % 2 === 0 ? "-110" : "10"}%, ${Math.floor(position / 2) * 110 + 10}%)`,
     }
 
 
@@ -58,13 +58,13 @@ function CreateHTML(item: Product, position: number) {
         let firstRelation: keyof typeof item.relations = dropdownHTML[0].props.value;
         let relation: Relation = utils.createRelation(item.relations[firstRelation]);
         setPrice(relation.price);
-    }, []);
+    }, [dropdownHTML, item]);
 
     return (
         <table className="table" style={inlineStyles} key={item.id}>
             <tbody>
             <tr className="itemTitleRow">
-                <td className="itemImage"><img src={imageURL} className="itemImage"/></td>
+                <td className="itemImage"><img src={imageURL} className="itemImage" alt={item.name}/></td>
                 <td><label className="itemNameLabel">{item.name}</label> <br/> <label
                     className="itemDescriptionLabel">{item.description}</label></td>
             </tr>
@@ -75,7 +75,7 @@ function CreateHTML(item: Product, position: number) {
 
             <tr style={{verticalAlign: "bottom"}}>
                 <td>
-                    {dropdownHTML.length == 1 ? null : subProductHTML}
+                    {dropdownHTML.length === 1 ? null : subProductHTML}
                 </td>
 
                 <td style={{textAlign: 'right'}}>
