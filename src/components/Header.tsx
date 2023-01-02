@@ -8,14 +8,19 @@ import {Honey, Items} from './Shop';
 import {GoogleLogin} from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
 import {Credential} from '../models/Credential';
-import {ProductService} from "../lib/utils";
+import {ProductService, CartService} from "../lib/utils";
 
 function Header() {
 
     const [tabIndex, setTabIndex] = useState(0);
+    const [dropdownHTML, setDropdownHTML] = useState([<a></a>]);
 
     const loadTab = (index: number) => {
         setTabIndex(index);
+    }
+
+    const reloadDropdownHMTL = () => {
+        setDropdownHTML(CartService.cartAsDropdown());
     }
 
     const googleSignIn = () => {
@@ -28,6 +33,7 @@ function Header() {
                 onError={() => {
                     console.log('Login Failed');
                 }}
+                auto_select
             />
         </div>
     }
@@ -36,6 +42,7 @@ function Header() {
         const init = async () => {
             await utils.setUser();
             await ProductService.setProductList();
+            await CartService.loadCart();
         }
         init();
     }, []);
@@ -58,6 +65,14 @@ function Header() {
                     <TabPanel></TabPanel>
                 </Tabs>
             </div>
+
+            <div className="dropdown">
+                <button onMouseEnter={reloadDropdownHMTL} className="dropbtn">Cart</button>
+                <div className="dropdown-content">
+                    {dropdownHTML}
+                </div>
+            </div>
+
             {googleSignIn()}
         </div>
     );

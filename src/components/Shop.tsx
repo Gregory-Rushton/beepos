@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import * as utils from "../lib/utils";
 import {Product} from "../models/Product";
 import {Relation} from "../models/Relation";
-import {ProductService} from "../lib/utils";
+import {ProductService, CartService} from "../lib/utils";
 
 //The honey and items shop code is too similar it can be put into one file
 
@@ -29,7 +29,8 @@ function CreateHTML(item: Product, position: number) {
     }
 
     const addToCart = () => {
-
+        CartService.addToCart(item.id, selectedSubProduct, Math.max(quantity, 1));
+        CartService.saveCart();
     }
 
 
@@ -53,11 +54,12 @@ function CreateHTML(item: Product, position: number) {
         transform: `translate(${position % 2 === 0 ? "-110" : "10"}%, ${Math.floor(position / 2) * 110 + 10}%)`,
     }
 
-
+    
     useEffect(() => {
         let firstRelation: keyof typeof item.relations = dropdownHTML[0].props.value;
         let relation: Relation = utils.createRelation(item.relations[firstRelation]);
         setPrice(relation.price);
+        setSelectedSubProduct(firstRelation.toString());
     }, [dropdownHTML, item]);
 
     return (
