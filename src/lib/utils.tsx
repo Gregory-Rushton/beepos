@@ -52,7 +52,7 @@ export const ProductService = {
         return product.relations[subProductID as keyof typeof product.relations] as Object as Relation;
     },
 
-    
+
     createProductString: (productString: string, cartItem: CartItem) => {
         let product: Product = ProductService.getProduct(cartItem.ID);
         let subProduct: Product = ProductService.getProduct(cartItem.subProductID);
@@ -64,48 +64,42 @@ export const ProductService = {
         productString = productString.replace("{description}", product.description);
         productString = productString.replace("{amount}", cartItem.amount.toString());
         productString = productString.replace("{fullPrice}", (relation.price*cartItem.amount).toFixed(2).toString())
-
-        
         return productString;
     }
-
 
 }
 
 export const CartService = {
-    loadCart: () => {
-    
+    getCartItems: () => {
+        let items: CartItem[] = []
         let cartString: string | null = localStorage.getItem("cart");
         try {
             if(cartString === null) {
                 throw console.error();
             }
             let cartObject: JSON[] = JSON.parse(cartString)['Items'];
-            
             for(let i in cartObject) {
-                cart[i] =  (cartObject[i] as Object) as CartItem;
+                items[i] =  (cartObject[i] as Object) as CartItem;
             }
-    
         } catch (error) {
             console.log("Errored loading cart, creating a new one");
             localStorage.setItem("cart", '{"Items": []}');
-            cart = [];
         }
+        return items;
     },
-    
+
     addToCart: (ID: string, subProductID: string, amount: number) => {
-    
+
         for(let item in cart) {
             if(cart[item].ID === ID && cart[item].subProductID === subProductID) {
                 cart[item].amount += amount;
                 return;
             }
         }
-    
+
         cart.push({"ID": ID, "subProductID": subProductID, "amount": amount} as CartItem);
     },
-    
-    
+
     saveCart: () => {
         let cartString: Object[] = [];
         for(let i in cart) {
@@ -113,7 +107,7 @@ export const CartService = {
         }
         localStorage.setItem("cart", `{"Items": ${JSON.stringify(cartString)}}`)
     },
-    
+
     cartAsDropdown: () => {
         let html: JSX.Element[] = [];
         for(let i in cart) {

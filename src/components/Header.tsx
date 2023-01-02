@@ -1,26 +1,22 @@
 import './Header.css';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import * as utils from "../lib/utils";
+import {ProductService} from "../lib/utils";
 
 import Home from './Home';
 import {Honey, Items} from './Shop';
 import {GoogleLogin} from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
 import {Credential} from '../models/Credential';
-import {ProductService, CartService} from "../lib/utils";
+import Cart from "./Cart";
 
 function Header() {
 
     const [tabIndex, setTabIndex] = useState(0);
-    const [dropdownHTML, setDropdownHTML] = useState([<a></a>]);
 
     const loadTab = (index: number) => {
         setTabIndex(index);
-    }
-
-    const reloadDropdownHMTL = () => {
-        setDropdownHTML(CartService.cartAsDropdown());
     }
 
     const googleSignIn = () => {
@@ -42,7 +38,6 @@ function Header() {
         const init = async () => {
             await utils.setUser();
             await ProductService.setProductList();
-            await CartService.loadCart();
         }
         init();
     }, []);
@@ -66,12 +61,7 @@ function Header() {
                 </Tabs>
             </div>
 
-            <div className="dropdown">
-                <button onMouseEnter={reloadDropdownHMTL} className="dropbtn">Cart</button>
-                <div className="dropdown-content">
-                    {dropdownHTML}
-                </div>
-            </div>
+            <Cart/>
 
             {googleSignIn()}
         </div>
