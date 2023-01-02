@@ -8,6 +8,7 @@ import {Honey, Items} from './Shop';
 import {GoogleLogin} from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
 import {Credential} from '../models/Credential';
+import {ProductService} from "../lib/utils";
 
 function Header() {
 
@@ -34,7 +35,7 @@ function Header() {
     useEffect(() => {
         const init = async () => {
             await utils.setUser();
-            await utils.setProductList();
+            await ProductService.setProductList();
         }
         init();
     }, []);

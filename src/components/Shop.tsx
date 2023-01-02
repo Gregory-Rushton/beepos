@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import * as utils from "../lib/utils";
 import {Product} from "../models/Product";
 import {Relation} from "../models/Relation";
+import {ProductService} from "../lib/utils";
 
 //The honey and items shop code is too similar it can be put into one file
 
@@ -36,7 +37,7 @@ function CreateHTML(item: Product, position: number) {
 
     // let relation: keyof typeof item.relations; //Typescript moment, needed to iterate over a json object
     for (let relation in item.relations) {
-        dropdownHTML.push(<option key={relation} value={relation}> {utils.getProduct(relation).name} </option>);
+        dropdownHTML.push(<option key={relation} value={relation}> {ProductService.getProduct(relation).name} </option>);
     }
 
     let subProductHTML: JSX.Element = (
@@ -98,7 +99,7 @@ function CreateHTML(item: Product, position: number) {
 }
 
 function CreateAllHTML(location: string) {
-    let productsOnPage: Product[] = utils.getProductsByLocation(location);
+    let productsOnPage: Product[] = ProductService.getProductsByLocation(location);
 
     let allHTML: JSX.Element[] = [];
 
