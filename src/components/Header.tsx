@@ -1,19 +1,17 @@
 import './Header.css';
-import { useState, useEffect } from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-// import 'react-tabs/style/react-tabs.css';
-
-
-import { Database, Auth } from "../lib/ajax.js";
+import {useEffect, useState} from 'react';
+import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import * as utils from "../lib/utils";
 
 import Home from './Home';
 import {Honey, Items} from './Shop';
+import {GoogleLogin} from "@react-oauth/google";
+import jwtDecode from "jwt-decode";
+import {Credential} from '../models/Credential';
 
 function Header() {
-    
+
     const [tabIndex, setTabIndex] = useState(0);
-    const [profilePicUrl, setProfilePicUrl] = useState("https://cdn.beepositiveapiary.com/account/pfp.png");
     const [dropdownHTML, setDropdownHTML] = useState([<a></a>]);
     
     document.title = "Bee Positive Apiary"
@@ -25,15 +23,26 @@ function Header() {
     const loadTab = (index: number) => {
         setTabIndex(index);
     }
-    
+
+    const googleSignIn = () => {
+        return <div style={{position: 'absolute', top: '10px', left: '10px'}}>
+            <GoogleLogin
+                onSuccess={credentialResponse => {
+                    const credential = jwtDecode<Credential>((credentialResponse as Credential).credential);
+                    console.log(credential);
+                }}
+                onError={() => {
+                    console.log('Login Failed');
+                }}
+            />
+        </div>
+    }
+
     useEffect(() => {
-        const init = async() => {
+        const init = async () => {
             await utils.setUser();
             await utils.setProductList();
             await utils.loadCart();
-            if(utils.user.ID != undefined) {
-                setProfilePicUrl(utils.user.pfpURL);
-            }
         }
         init();
     }, []);
@@ -55,17 +64,14 @@ function Header() {
                     <TabPanel><Items/></TabPanel>
                     <TabPanel></TabPanel>
                 </Tabs>
-
             </div>
-            <img src={profilePicUrl} className="profileIcon"></img>
-
             <div className="dropdown">
                 <button onMouseEnter={reloadDropdownHMTL} className="dropbtn">Cart</button>
                 <div className="dropdown-content">
                     {dropdownHTML}
                 </div>
             </div>
-
+            {googleSignIn()}
 
         </div>
     );
