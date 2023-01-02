@@ -54,20 +54,20 @@ export const ProductService = {
 
     
     createProductString: (productString: string, cartItem: CartItem) => {
-    let product: Product = ProductService.getProduct(cartItem.ID);
-    let subProduct: Product = ProductService.getProduct(cartItem.subProductID);
-    let relation: Relation = ProductService.getRelation(cartItem.ID, cartItem.subProductID);
-    productString = productString.replace("{product}", product.name);
-    productString = productString.replace("{subProduct}", subProduct.name);
-    productString = productString.replace("{subProduct_of}", subProduct.name == "" ? "" : `${subProduct.name} of`);
-    productString = productString.replace("{price}", relation.price.toString());
-    productString = productString.replace("{description}", product.description);
-    productString = productString.replace("{amount}", cartItem.amount.toString());
-    productString = productString.replace("{fullPrice}", (relation.price*cartItem.amount).toFixed(2).toString())
+        let product: Product = ProductService.getProduct(cartItem.ID);
+        let subProduct: Product = ProductService.getProduct(cartItem.subProductID);
+        let relation: Relation = ProductService.getRelation(cartItem.ID, cartItem.subProductID);
+        productString = productString.replace("{product}", product.name);
+        productString = productString.replace("{subProduct}", subProduct.name);
+        productString = productString.replace("{subProduct_of}", subProduct.name == "" ? "" : `${subProduct.name} of`);
+        productString = productString.replace("{price}", relation.price.toString());
+        productString = productString.replace("{description}", product.description);
+        productString = productString.replace("{amount}", cartItem.amount.toString());
+        productString = productString.replace("{fullPrice}", (relation.price*cartItem.amount).toFixed(2).toString())
 
-    
-    return productString;
-}
+        
+        return productString;
+    }
 
 
 }
