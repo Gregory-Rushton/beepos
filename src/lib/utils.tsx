@@ -20,7 +20,7 @@ export async function setUser() {
 
 export const ProductService = {
 
-    setProductList: async () => {
+    setProductList: () => {
         productsJson.map((p, idx) => productList[idx] = JSON.parse(JSON.stringify(p)));
         return productList;
     },
