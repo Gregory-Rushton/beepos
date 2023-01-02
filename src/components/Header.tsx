@@ -10,10 +10,12 @@ import {GoogleLogin} from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
 import {Credential} from '../models/Credential';
 import Cart from "./Cart";
+import {Product} from "../models/Product";
 
 function Header() {
 
     const [tabIndex, setTabIndex] = useState(0);
+    const [products, setProducts] = useState<Product[]>();
 
     const loadTab = (index: number) => {
         setTabIndex(index);
@@ -37,7 +39,8 @@ function Header() {
     useEffect(() => {
         const init = async () => {
             await utils.setUser();
-            await ProductService.setProductList();
+            const products = await ProductService.setProductList();
+            setProducts(products);
         }
         init();
     }, []);

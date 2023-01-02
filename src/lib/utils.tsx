@@ -3,6 +3,7 @@ import {User} from "../models/User";
 import {Relation} from "../models/Relation";
 import {Product} from "../models/Product";
 import {CartItem} from "../models/CartItem";
+import productsJson from "../resources/products.json";
 
 export let user: User;
 export let productList: Product[] = [];
@@ -20,12 +21,8 @@ export async function setUser() {
 export const ProductService = {
 
     setProductList: async () => {
-        let productListArray: Object[] = (await Database.getProducts())["response"]["products"];
-
-        for (let element in productListArray) {
-            productList[element] = (productListArray[element] as Product);
-        }
-
+        productsJson.map((p, idx) => productList[idx] = JSON.parse(JSON.stringify(p)));
+        return productList;
     },
 
     getProductsByLocation: (location: string) => {
