@@ -14,7 +14,7 @@ function Cart() {
         let html: JSX.Element[] = [];
         for (let i in cartItems) {
             html[i] =
-                <a>{ProductService.createProductString("{amount}x {subProduct_of} {product} (${fullPrice})", cartItems[i])}</a>;
+                <a>{CartService.stringify(cartItems[i])}</a>;
         }
         return html;
     }
