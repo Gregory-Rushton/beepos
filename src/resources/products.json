@@ -1,0 +1,224 @@
+[
+  {
+    "name": "",
+    "description": "",
+    "location": null,
+    "imageURL": null,
+    "stock": null,
+    "relations": {
+      "0": {
+        "imageURL": "",
+        "price": 2.99
+      }
+    },
+    "id": "0"
+  },
+  {
+    "name": "Whipped Sugar Scrub",
+    "description": "",
+    "location": "items",
+    "imageURL": "https://cdn.beepositiveapiary.com/products/100/00.png",
+    "stock": 64,
+    "relations": {
+      "0": {
+        "imageURL": "https://cdn.beepositiveapiary.com/products/100/00.png",
+        "price": 18
+      }
+    },
+    "id": "100"
+  },
+  {
+    "name": "Body Butter",
+    "description": "",
+    "location": "items",
+    "imageURL": "https://cdn.beepositiveapiary.com/products/100/01.png",
+    "stock": 64,
+    "relations": {
+      "0": {
+        "imageURL": "https://cdn.beepositiveapiary.com/products/100/01.png",
+        "price": 18
+      }
+    },
+    "id": "101"
+  },
+  {
+    "name": "Cuticle Crème",
+    "description": "1oz",
+    "location": "items",
+    "imageURL": "https://cdn.beepositiveapiary.com/products/100/02.png",
+    "stock": 64,
+    "relations": {
+      "0": {
+        "imageURL": "https://cdn.beepositiveapiary.com/products/100/02.png",
+        "price": 12
+      }
+    },
+    "id": "102"
+  },
+  {
+    "name": "Sugar Scrub",
+    "description": "",
+    "location": "items",
+    "imageURL": "https://cdn.beepositiveapiary.com/products/100/03.png",
+    "stock": 64,
+    "relations": {
+      "0": {
+        "imageURL": "https://cdn.beepositiveapiary.com/products/100/03.png",
+        "price": 2.99
+      }
+    },
+    "id": "103"
+  },
+  {
+    "name": "Lip Balm",
+    "description": "",
+    "location": "items",
+    "imageURL": "https://cdn.beepositiveapiary.com/products/100/04.png",
+    "stock": 61,
+    "relations": {
+      "310": {
+        "imageURL": "https://cdn.beepositiveapiary.com/products/100/04.png",
+        "price": 5
+      },
+      "311": {
+        "imageURL": "https://cdn.beepositiveapiary.com/products/100/04.png",
+        "price": 5
+      }
+    },
+    "id": "104"
+  },
+  {
+    "name": "Cuticle & Nail Oil",
+    "description": "",
+    "location": "items",
+    "imageURL": "https://cdn.beepositiveapiary.com/products/100/05.png",
+    "stock": 64,
+    "relations": {
+      "0": {
+        "imageURL": "https://cdn.beepositiveapiary.com/products/100/05.png",
+        "price": 2.99
+      }
+    },
+    "id": "105"
+  },
+  {
+    "name": "Sunshine Lotion",
+    "description": "",
+    "location": "items",
+    "imageURL": "https://cdn.beepositiveapiary.com/products/100/06.png",
+    "stock": 64,
+    "relations": {
+      "0": {
+        "imageURL": "https://cdn.beepositiveapiary.com/products/100/06.png",
+        "price": 18
+      }
+    },
+    "id": "106"
+  },
+  {
+    "name": "Plain Honey",
+    "description": "Plain honey",
+    "location": "honey",
+    "imageURL": "https://cdn.beepositiveapiary.com/products/200/00.png",
+    "stock": 56,
+    "relations": {
+      "300": {
+        "imageURL": "https://cdn.beepositiveapiary.com/relations/200/300.png",
+        "price": 2.99
+      },
+      "301": {
+        "imageURL": "https://cdn.beepositiveapiary.com/relations/200/301.png",
+        "price": 4.99
+      },
+      "302": {
+        "imageURL": "https://cdn.beepositiveapiary.com/relations/200/302.png",
+        "price": 6.99
+      },
+      "303": {
+        "imageURL": "https://cdn.beepositiveapiary.com/relations/200/303.png",
+        "price": 8.99
+      }
+    },
+    "id": "200"
+  },
+  {
+    "name": "Cranberry Honey",
+    "description": "Cranberry flavored honey",
+    "location": "honey",
+    "imageURL": "https://cdn.beepositiveapiary.com/products/200/01.png",
+    "stock": 63,
+    "relations": {
+      "300": {
+        "imageURL": "https://cdn.beepositiveapiary.com/relations/201/300.png",
+        "price": 2.99
+      },
+      "301": {
+        "imageURL": "https://cdn.beepositiveapiary.com/relations/201/301.png",
+        "price": 4.99
+      },
+      "302": {
+        "imageURL": "https://cdn.beepositiveapiary.com/relations/201/302.png",
+        "price": 6.99
+      },
+      "303": {
+        "imageURL": "https://cdn.beepositiveapiary.com/relations/201/303.png",
+        "price": 8.99
+      }
+    },
+    "id": "201"
+  },
+  {
+    "name": "8oz Jar",
+    "description": "",
+    "location": null,
+    "imageURL": "https://cdn.beepositiveapiary.com/products/300/00.png",
+    "stock": 64,
+    "relations": {},
+    "id": "300"
+  },
+  {
+    "name": "10oz Jar",
+    "description": "",
+    "location": null,
+    "imageURL": "https://cdn.beepositiveapiary.com/products/300/01.png",
+    "stock": 64,
+    "relations": {},
+    "id": "301"
+  },
+  {
+    "name": "1lb Jar",
+    "description": "",
+    "location": null,
+    "imageURL": "https://cdn.beepositiveapiary.com/products/300/02.png",
+    "stock": 55,
+    "relations": {},
+    "id": "302"
+  },
+  {
+    "name": "2lb Jar",
+    "description": "",
+    "location": null,
+    "imageURL": "https://cdn.beepositiveapiary.com/products/300/03.png",
+    "stock": 64,
+    "relations": {},
+    "id": "303"
+  },
+  {
+    "name": "Tube",
+    "description": "",
+    "location": null,
+    "imageURL": "https://cdn.beepositiveapiary.com/products/300/10.png",
+    "stock": 64,
+    "relations": {},
+    "id": "310"
+  },
+  {
+    "name": "Tub",
+    "description": "",
+    "location": null,
+    "imageURL": "https://cdn.beepositiveapiary.com/products/300/11.png",
+    "stock": 64,
+    "relations": {},
+    "id": "311"
+  }
+]

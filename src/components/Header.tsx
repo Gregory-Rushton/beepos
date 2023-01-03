@@ -1,18 +1,21 @@
 import './Header.css';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import * as utils from "../lib/utils";
+import {ProductService} from "../lib/utils";
 
 import Home from './Home';
 import {Honey, Items} from './Shop';
 import {GoogleLogin} from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
 import {Credential} from '../models/Credential';
-import {ProductService} from "../lib/utils";
+import Cart from "./Cart";
+import {Product} from "../models/Product";
 
 function Header() {
 
     const [tabIndex, setTabIndex] = useState(0);
+    const [products, setProducts] = useState<Product[]>();
 
     const loadTab = (index: number) => {
         setTabIndex(index);
@@ -28,6 +31,7 @@ function Header() {
                 onError={() => {
                     console.log('Login Failed');
                 }}
+                auto_select
             />
         </div>
     }
@@ -35,7 +39,8 @@ function Header() {
     useEffect(() => {
         const init = async () => {
             await utils.setUser();
-            await ProductService.setProductList();
+            const products = await ProductService.setProductList();
+            setProducts(products);
         }
         init();
     }, []);
@@ -58,6 +63,9 @@ function Header() {
                     <TabPanel></TabPanel>
                 </Tabs>
             </div>
+
+            <Cart/>
+
             {googleSignIn()}
         </div>
     );
