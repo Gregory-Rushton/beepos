@@ -52,6 +52,11 @@ export const ProductService = {
 }
 
 export const CartService = {
+
+    setCart: (newCart: CartItem[]) => {
+        cart = newCart;
+    },
+
     getCartItems: () => {
         let items: CartItem[] = []
         let cartString: string | null = localStorage.getItem("cart");
@@ -90,6 +95,7 @@ export const CartService = {
         localStorage.setItem("cart", `{"Items": ${JSON.stringify(cartString)}}`)
     },
     stringify: (item: CartItem) => {
+        productList = ProductService.setProductList();
         let product: Product = ProductService.getProduct(item.ID);
         let subProduct: Product = ProductService.getProduct(item.subProductID);
         let relation: Relation = ProductService.getRelation(item.ID, item.subProductID);

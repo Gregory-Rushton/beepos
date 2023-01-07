@@ -2,7 +2,7 @@ import './Header.css';
 import React, {useEffect, useState} from 'react';
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import * as utils from "../lib/utils";
-import {ProductService} from "../lib/utils";
+import {ProductService, CartService} from "../lib/utils";
 
 import Home from './Home';
 import {Honey, Items} from './Shop';
@@ -11,11 +11,13 @@ import jwtDecode from "jwt-decode";
 import {Credential} from '../models/Credential';
 import Cart from "./Cart";
 import {Product} from "../models/Product";
+import {CartItem} from "../models/CartItem";
 
 function Header() {
 
     const [tabIndex, setTabIndex] = useState(0);
     const [products, setProducts] = useState<Product[]>();
+    const [cart, setCart] = useState<CartItem[]>();
 
     const loadTab = (index: number) => {
         setTabIndex(index);
@@ -39,8 +41,8 @@ function Header() {
     useEffect(() => {
         const init = async () => {
             await utils.setUser();
-            const products = await ProductService.setProductList();
-            setProducts(products);
+            setProducts(await ProductService.setProductList());
+            setCart(CartService.getCartItems());
         }
         init();
     }, []);
