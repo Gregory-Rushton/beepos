@@ -7,7 +7,6 @@ import productsJson from "../resources/products.json";
 
 export let user: User;
 export let productList: Product[] = [];
-export let cart: CartItem[] = [];
 
 export async function setUser() {
     let response = {"response": {}}
@@ -53,10 +52,6 @@ export const ProductService = {
 
 export const CartService = {
 
-    setCart: (newCart: CartItem[]) => {
-        cart = newCart;
-    },
-
     getCartItems: () => {
         let items: CartItem[] = []
         let cartString: string | null = localStorage.getItem("cart");
@@ -71,39 +66,33 @@ export const CartService = {
         } catch (error) {
             console.log("Errored loading cart, creating a new one");
             localStorage.setItem("cart", '{"Items": []}');
+            items = []; //reset it if error
         }
         return items;
     },
 
-    addToCart: (ID: string, subProductID: string, amount: number) => {
-
-        for(let item in cart) {
-            if(cart[item].ID === ID && cart[item].subProductID === subProductID) {
-                cart[item].amount += amount;
-                return;
-            }
-        }
-
-        cart.push({"ID": ID, "subProductID": subProductID, "amount": amount} as CartItem);
-    },
-
-    saveCart: () => {
+    saveCart: (cart: CartItem[]) => {
         let cartString: Object[] = [];
         for(let i in cart) {
             cartString[i] = {"ID": cart[i].ID, "subProductID": cart[i].subProductID, "amount": cart[i].amount};
         }
         localStorage.setItem("cart", `{"Items": ${JSON.stringify(cartString)}}`)
     },
-    stringify: (item: CartItem) => {
-        productList = ProductService.setProductList();
-        let product: Product = ProductService.getProduct(item.ID);
-        let subProduct: Product = ProductService.getProduct(item.subProductID);
-        let relation: Relation = ProductService.getRelation(item.ID, item.subProductID);
 
-        return `$${item.amount}x ${subProduct.name == "" ? "" : `${subProduct.name} of`} ${product.name} ($${relation.price * item.amount})`
+    addToCart: (cart: CartItem[], ID: string, subProductID: string, amount: number) => {
+
+        for(let item in cart) {
+            if(cart[item].ID === ID && cart[item].subProductID === subProductID) {
+                cart[item].amount += amount;
+                return cart;
+            }
+        }
+        cart.push({"ID": ID, "subProductID": subProductID, "amount": amount} as CartItem);
+        
+        return cart;
     },
 
-    cartAsDropdown: () => {
+    cartAsDropdown: (cart: CartItem[]) => {
         let html: JSX.Element[] = [];
         for(let i in cart) {
             html[i] = <a>{CartService.stringify(cart[i])}</a>;
@@ -111,6 +100,14 @@ export const CartService = {
         return html;
     },
 
+    stringify: (item: CartItem) => {
+        productList = ProductService.setProductList();
+        let product: Product = ProductService.getProduct(item.ID);
+        let subProduct: Product = ProductService.getProduct(item.subProductID);
+        let relation: Relation = ProductService.getRelation(item.ID, item.subProductID);
+
+        return `$${item.amount}x ${subProduct.name == "" ? "" : `${subProduct.name} of`} ${product.name} ($${relation.price * item.amount})`
+    }
 }
 
 export function createRelation(relation: Object) {

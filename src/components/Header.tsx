@@ -17,7 +17,6 @@ function Header() {
 
     const [tabIndex, setTabIndex] = useState(0);
     const [products, setProducts] = useState<Product[]>();
-    const [cart, setCart] = useState<CartItem[]>();
 
     const loadTab = (index: number) => {
         setTabIndex(index);
@@ -42,7 +41,6 @@ function Header() {
         const init = async () => {
             await utils.setUser();
             setProducts(await ProductService.setProductList());
-            setCart(CartService.getCartItems());
         }
         init();
     }, []);
