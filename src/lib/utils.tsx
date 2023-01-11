@@ -81,6 +81,8 @@ export const CartService = {
 
     addToCart: (cart: CartItem[], ID: string, subProductID: string, amount: number) => {
 
+        console.log(ID, subProductID);
+
         for(let item in cart) {
             if(cart[item].ID === ID && cart[item].subProductID === subProductID) {
                 cart[item].amount += amount;
