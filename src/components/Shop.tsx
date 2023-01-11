@@ -31,7 +31,6 @@ function CreateHTML(item: Product, position: number) {
 
     const addToCart = () => {
         let cart: CartItem[] = CartService.addToCart(CartService.getCartItems(), item.id, selectedSubProduct, Math.max(quantity, 1)) as CartItem[];
-        console.log(cart);
         CartService.saveCart(cart);
     }
 

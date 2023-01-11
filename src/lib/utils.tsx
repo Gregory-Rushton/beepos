@@ -51,7 +51,6 @@ export const ProductService = {
 }
 
 export const CartService = {
-
     getCartItems: () => {
         let items: CartItem[] = []
         let cartString: string | null = localStorage.getItem("cart");
