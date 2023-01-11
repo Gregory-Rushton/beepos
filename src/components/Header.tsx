@@ -1,17 +1,16 @@
 import './Header.css';
 import React, {useEffect, useState} from 'react';
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
-import * as utils from "../lib/utils";
-import {ProductService, CartService} from "../lib/utils";
+import {GoogleLogin} from "@react-oauth/google";
+import jwtDecode from "jwt-decode";
 
 import Home from './Home';
 import {Honey, Items} from './Shop';
-import {GoogleLogin} from "@react-oauth/google";
-import jwtDecode from "jwt-decode";
-import {Credential} from '../models/Credential';
 import Cart from "./Cart";
+import * as utils from "../lib/utils";
+import {ProductService, CartService} from "../lib/utils";
+import {Credential} from '../models/Credential';
 import {Product} from "../models/Product";
-import {CartItem} from "../models/CartItem";
 
 function Header() {
 
@@ -32,6 +31,7 @@ function Header() {
                 onError={() => {
                     console.log('Login Failed');
                 }}
+                useOneTap
                 auto_select
             />
         </div>
