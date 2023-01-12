@@ -1,3 +1,4 @@
+import * as ReactDOM from 'react-dom/client';
 import {Auth, Database} from "./ajax.js";
 import {User} from "../models/User";
 import {Relation} from "../models/Relation";
@@ -8,12 +9,15 @@ import productsJson from "../resources/products.json";
 export let user: User;
 export let productList: Product[] = [];
 
+const root = ReactDOM.createRoot(
+    document.getElementById('root') as Element
+);
+
 export async function setUser() {
     let response = {"response": {}}
     try {
         response = await Auth.getUser();
-    } catch {
-    }
+    } catch {}
     user = (response["response"] as User);
 }
 
