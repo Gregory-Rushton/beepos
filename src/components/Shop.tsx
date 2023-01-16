@@ -2,6 +2,7 @@ import "./Shop.css";
 
 import ReactDOM from 'react-dom/client';
 import {useEffect, useState} from "react";
+import {ToastsContainer, ToastsContainerPosition, ToastsStore} from 'react-toasts'
 
 import * as utils from "../lib/utils";
 import {Product} from "../models/Product";
@@ -38,6 +39,7 @@ function CreateHTML(item: Product, position: number) {
     const addToCart = () => {
         let cart: CartItem[] = CartService.addToCart(CartService.getCartItems(), item.id, selectedSubProduct, Math.max(quantity, 1)) as CartItem[];
         CartService.saveCart(cart);
+        ToastsStore.info(`Added ${item.name} to Cart`);
     }
     
     let dropdownHTML: JSX.Element[] = [];

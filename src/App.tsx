@@ -1,6 +1,7 @@
 import React from 'react';
 import {GoogleOAuthProvider} from "@react-oauth/google";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {ToastsContainer, ToastsContainerPosition, ToastsStore} from 'react-toasts'
 
 import './App.css';
 import Header from './components/Header';
@@ -9,6 +10,7 @@ import Checkout from './components/Checkout';
 function App() {
     return (
         <BrowserRouter>
+                <ToastsContainer position={ToastsContainerPosition.BOTTOM_RIGHT} store={ToastsStore}/>
                 <Routes>
                     <Route path="/">
                         <Route index element={
