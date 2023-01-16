@@ -1,4 +1,3 @@
-import * as ReactDOM from 'react-dom/client';
 import {Auth, Database} from "./ajax.js";
 import {User} from "../models/User";
 import {Relation} from "../models/Relation";
@@ -8,6 +7,7 @@ import productsJson from "../resources/products.json";
 
 export let user: User;
 export let productList: Product[] = [];
+
 
 export async function setUser() {
     let response = {"response": {}}
@@ -105,7 +105,7 @@ export const CartService = {
         let subProduct: Product = ProductService.getProduct(item.subProductID);
         let relation: Relation = ProductService.getRelation(item.ID, item.subProductID);
 
-        return `$${item.amount}x ${subProduct.name == "" ? "" : `${subProduct.name} of`} ${product.name} ($${relation.price * item.amount})`
+        return `$${item.amount}x ${subProduct.name === "" ? "" : `${subProduct.name} of`} ${product.name} ($${relation.price * item.amount})`
     }
 }
 

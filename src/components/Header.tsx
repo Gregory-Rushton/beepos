@@ -1,6 +1,5 @@
 import './Header.css';
 import React, {useEffect, useState} from 'react';
-import * as ReactDOM from 'react-dom/client';
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import {GoogleLogin} from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
@@ -8,7 +7,6 @@ import jwtDecode from "jwt-decode";
 import Home from './Home';
 import {Honey, Items} from './Shop';
 import Cart from "./Cart";
-import {Checkout, Finalize} from './Checkout';
 
 import * as utils from "../lib/utils";
 import {ProductService, CartService} from "../lib/utils";
@@ -60,12 +58,11 @@ function Header() {
                         <Tab>About Us</Tab>
                     </TabList>
 
-                    <div id="root">
-                        <TabPanel><Home/></TabPanel>
-                        <TabPanel><Honey/></TabPanel>
-                        <TabPanel><Items/></TabPanel>
-                        <TabPanel></TabPanel>
-                    </div>
+
+                    <TabPanel><Home/></TabPanel>
+                    <TabPanel><Honey/></TabPanel>
+                    <TabPanel><Items/></TabPanel>
+                    <TabPanel></TabPanel>
                 </Tabs>
             </div>
 

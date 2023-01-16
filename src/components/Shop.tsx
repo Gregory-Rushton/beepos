@@ -1,11 +1,16 @@
 import "./Shop.css";
 
+import ReactDOM from 'react-dom/client';
 import {useEffect, useState} from "react";
+import {ToastsContainer, ToastsContainerPosition, ToastsStore} from 'react-toasts'
+
 import * as utils from "../lib/utils";
 import {Product} from "../models/Product";
 import {Relation} from "../models/Relation";
 import {CartItem} from "../models/CartItem";
 import {ProductService, CartService} from "../lib/utils";
+import Checkout from "./Checkout"
+
 
 //The honey and items shop code is too similar it can be put into one file
 
