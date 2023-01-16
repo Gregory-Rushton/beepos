@@ -16,15 +16,17 @@ function CreateHTML(item: Product, position: number) {
     const [imageURL, setImageURL] = useState(item.imageURL);
     const [quantity, setQuantity] = useState(0);
     const [selectedSubProduct, setSelectedSubProduct] = useState("");
-
+    
     const handleCountChange = (event: any) => {
         setQuantity(event.target.value);
     }
-
-    const updateItemInfo = (value: any) => {
-        setSelectedSubProduct(value.target.value);
-        let related: keyof typeof item.relations = value.target.value;
+    
+    const updateSubProduct = (subProductID: string) => {
+        setSelectedSubProduct(subProductID);
+        
+        let related: keyof typeof item.relations = selectedSubProduct as keyof typeof item.relations;
         let relation: Relation = utils.createRelation(item.relations[related]);
+        
         setPrice(relation.price);
         setImageURL(relation.imageURL);
     }
@@ -33,10 +35,8 @@ function CreateHTML(item: Product, position: number) {
         let cart: CartItem[] = CartService.addToCart(CartService.getCartItems(), item.id, selectedSubProduct, Math.max(quantity, 1)) as CartItem[];
         CartService.saveCart(cart);
     }
-
-
+    
     let dropdownHTML: JSX.Element[] = [];
-
     for (let relation in item.relations) {
         dropdownHTML.push(<option key={relation} value={relation}> {ProductService.getProduct(relation).name} </option>);
     }
@@ -44,7 +44,7 @@ function CreateHTML(item: Product, position: number) {
     let subProductHTML: JSX.Element = (
         <form>
             Size: &nbsp;
-            <select onChange={value => updateItemInfo(value)}>
+            <select onChange={event => updateSubProduct(event.target.value)}>
                 {dropdownHTML}
             </select>
         </form>
@@ -54,13 +54,12 @@ function CreateHTML(item: Product, position: number) {
         transform: `translate(${position % 2 === 0 ? "-110" : "10"}%, ${Math.floor(position / 2) * 110 + 10}%)`,
     }
 
-    
     useEffect(() => {
         let firstRelation: keyof typeof item.relations = dropdownHTML[0].props.value;
         let relation: Relation = utils.createRelation(item.relations[firstRelation]);
         setPrice(relation.price);
         setSelectedSubProduct(firstRelation.toString());
-    }, [dropdownHTML, item]);
+    }, []);
 
     return (
         <table className="table" style={inlineStyles} key={item.id}>

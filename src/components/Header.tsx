@@ -43,8 +43,7 @@ function Header() {
     useEffect(() => {
         const init = async () => {
             await utils.setUser();
-            const products = await ProductService.setProductList();
-            setProducts(products);
+            setProducts(await ProductService.setProductList());
         }
         init();
     }, []);

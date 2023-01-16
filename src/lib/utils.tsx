@@ -9,10 +9,6 @@ import productsJson from "../resources/products.json";
 export let user: User;
 export let productList: Product[] = [];
 
-const root = ReactDOM.createRoot(
-    document.getElementById('root') as Element
-);
-
 export async function setUser() {
     let response = {"response": {}}
     try {
@@ -55,6 +51,7 @@ export const ProductService = {
 }
 
 export const CartService = {
+
     getCartItems: () => {
         let items: CartItem[] = []
         let cartString: string | null = localStorage.getItem("cart");
@@ -83,7 +80,6 @@ export const CartService = {
     },
 
     addToCart: (cart: CartItem[], ID: string, subProductID: string, amount: number) => {
-
         for(let item in cart) {
             if(cart[item].ID === ID && cart[item].subProductID === subProductID) {
                 cart[item].amount += amount;

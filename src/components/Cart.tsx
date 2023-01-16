@@ -11,7 +11,7 @@ function Cart() {
         let html: JSX.Element[] = [];
         for (let i in cartItems) {
             html[i] =
-                <a key={cartItems[i].ID}>{CartService.stringify(cartItems[i])}</a>;
+                <a key={`${cartItems[i].ID}|${cartItems[i].subProductID}`}>{CartService.stringify(cartItems[i])}</a>;
         }
         html.push(<a key="checkout" href="">Checkout</a>);
         return html;
