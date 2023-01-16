@@ -1,29 +1,27 @@
 import {CartService, ProductService} from "../lib/utils";
+import * as utils from "../lib/utils";
 import {useEffect, useState} from "react";
 import {CartItem} from "../models/CartItem";
 
 function Cart() {
 
-    const [cartItems, setCartItems] = useState(([] as CartItem[]));
+    const [cartHTML, setCartHTML] = useState([<a key={0}></a>])
 
-    useEffect(() => {
-        setCartItems(CartService.getCartItems());
-    }, []);
-
-    const populateCartItemList = () => {
+    const populateCartItemList = (cartItems: CartItem[]) => {
         let html: JSX.Element[] = [];
         for (let i in cartItems) {
             html[i] =
-                <a>{CartService.stringify(cartItems[i])}</a>;
+                <a key={`${cartItems[i].ID}|${cartItems[i].subProductID}`}>{CartService.stringify(cartItems[i])}</a>;
         }
+        html.push(<a key="checkout" href="">Checkout</a>);
         return html;
     }
-
+ 
     return (
         <div className="dropdown">
-            <button className="dropbtn">Cart</button>
-            <div className="dropdown-content">
-                {populateCartItemList()}
+            <button key={"a0"} onMouseEnter={ () => setCartHTML(populateCartItemList(CartService.getCartItems())) } className="dropbtn">Cart</button>
+            <div key={"a1"} className="dropdown-content">
+                {cartHTML}
             </div>
         </div>
     );
