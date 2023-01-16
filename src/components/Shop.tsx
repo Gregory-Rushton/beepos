@@ -2,7 +2,6 @@ import "./Shop.css";
 
 import ReactDOM from 'react-dom/client';
 import {useEffect, useState} from "react";
-import {ToastsContainer, ToastsContainerPosition, ToastsStore} from 'react-toasts'
 
 import * as utils from "../lib/utils";
 import {Product} from "../models/Product";
