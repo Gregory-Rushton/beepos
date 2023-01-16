@@ -13,7 +13,7 @@ function Cart() {
             html[i] =
                 <a key={`${cartItems[i].ID}|${cartItems[i].subProductID}`}>{CartService.stringify(cartItems[i])}</a>;
         }
-        html.push(<a key="checkout" href="">Checkout</a>);
+        html.push(<a key="checkout" href="/checkout">Checkout</a>);
         return html;
     }
  
