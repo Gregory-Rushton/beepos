@@ -70,6 +70,15 @@ function CheckoutMenu() {
         cartItems.push(CreateCartItem(element));
     })
 
+    let subtotal: number = CartService.getTotals(cart).cost as unknown as number;
+    let tax: number = (subtotal * 0.0625) as number;
+    console.log(typeof subtotal);
+    console.log(typeof tax);
+    let total = subtotal + tax;
+    cartItems.push(<tr key="a"><td> Subtotal: </td> <td/> <td/> <td>${subtotal.toFixed(2)}</td>  </tr>)
+    cartItems.push(<tr key="b"><td> Tax: </td> <td/> <td/> <td>+ ${tax.toFixed(2)}</td>  </tr>)
+    cartItems.push(<tr key="c"><td> Total: </td> <td/> <td/> <td>${total.toFixed(2)}</td>  </tr>)
+
     return (
         <div className="checkout-container">
             <br />

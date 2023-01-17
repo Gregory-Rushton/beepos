@@ -1,6 +1,6 @@
 .checkout-container {
     margin-left: 5%;
-    width: 40%;
+    width: 35%;
     background-color: lightgrey;
 }
 
@@ -14,10 +14,11 @@
 
 .checkout-items table {
     margin: auto;
+    padding-bottom: 15px;
 }
 
 .checkout-item td {
-    padding: 5px;
+    padding-bottom: 20px;
 }
 
 .checkout-item input {

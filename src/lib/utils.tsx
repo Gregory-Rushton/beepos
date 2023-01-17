@@ -110,6 +110,19 @@ export const CartService = {
         return html;
     },
 
+    getTotals: (cart: CartItem[]) => {
+        let totalCost: number = 0.0;
+        let totalItems: number = 0;
+
+        cart.forEach((element, i) => {
+            totalItems += element.amount;
+            let relation = ProductService.getRelation(element.ID, element.subProductID);
+            totalCost += relation.price * element.amount;
+        })
+
+        return {"items": totalItems, "cost": totalCost};
+    },
+
     stringify: (item: CartItem) => {
         productList = ProductService.setProductList();
         let product: Product = ProductService.getProduct(item.ID);
