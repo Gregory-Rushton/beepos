@@ -10,8 +10,14 @@ import { Relation } from "../models/Relation";
 
 function simpleHeader() {
     return (
-        <div className="header">
-            <h1> <a onClick={(e) => {}}>Bee Positive Apiary</a></h1>
+        <div>
+            <div className="header" style={{border: "1px solid black"}}>
+                <h1> <a onClick={(e) => {window.location.href="/"}}>Bee Positive Apiary</a></h1>
+            </div>
+
+            <div className="header">
+                <h2>Checkout</h2>
+            </div>
         </div>
     );
 }
@@ -72,8 +78,6 @@ function CheckoutMenu() {
 
     let subtotal: number = CartService.getTotals(cart).cost as unknown as number;
     let tax: number = (subtotal * 0.0625) as number;
-    console.log(typeof subtotal);
-    console.log(typeof tax);
     let total = subtotal + tax;
     cartItems.push(<tr key="a"> <td> Subtotal: </td> <td/> <td/> <td> ${subtotal.toFixed(2)} </td>  </tr>)
     cartItems.push(<tr key="b"> <td> Tax:      </td> <td/> <td/> <td> + ${tax.toFixed(2)}    </td>  </tr>)
@@ -99,7 +103,7 @@ function CheckoutMenu() {
 
 function FinalizeMenu() {
     return (
-        <div>
+        <div className="finalize-container">
             <a>Finalize</a>
         </div>
     );
@@ -114,8 +118,14 @@ function Checkout() {
     return (
         <div>
             {simpleHeader()}
-            <br/>
-            {CheckoutMenu()}
+            
+            <div className="leftside-position">
+                {CheckoutMenu()}
+            </div>
+
+            <div className="rightside-position">
+                {FinalizeMenu()}
+            </div>
 
         </div>
     );

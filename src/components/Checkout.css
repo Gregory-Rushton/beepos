@@ -1,6 +1,19 @@
+.leftside-position {
+    position:absolute;
+    top: 150px;
+    left: 100px;
+}
+.rightside-position {
+    position:absolute;
+    top: 150px;
+    right: 100px;
+
+}
+
+
 .checkout-container {
     margin-left: 5%;
-    width: 35%;
+    /* width: 35%; */
     background-color: lightgrey;
 }
 
@@ -14,6 +27,8 @@
 
 .checkout-items table {
     margin: auto;
+    padding-left: 50px;
+    padding-right: 50px;
     padding-bottom: 35px;
 }
 
@@ -25,3 +40,8 @@
     width: 50px;
 }
 
+/*Finalize Menu*/
+
+.finalize-container {
+
+}
