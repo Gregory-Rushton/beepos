@@ -21,17 +21,17 @@ function CreateHTML(item: Product, position: number) {
     const [imageURL, setImageURL] = useState(item.imageURL);
     const [quantity, setQuantity] = useState(0);
     const [selectedSubProduct, setSelectedSubProduct] = useState("");
-    
+
     const handleCountChange = (event: any) => {
         setQuantity(event.target.value);
     }
-    
+
     const updateSubProduct = (subProductID: string) => {
         setSelectedSubProduct(subProductID);
-        
+
         let related: keyof typeof item.relations = selectedSubProduct as keyof typeof item.relations;
         let relation: Relation = utils.createRelation(item.relations[related]);
-        
+
         setPrice(relation.price);
         setImageURL(relation.imageURL);
     }
@@ -41,7 +41,7 @@ function CreateHTML(item: Product, position: number) {
         CartService.saveCart(cart);
         ToastsStore.info(`Added ${item.name} to Cart`);
     }
-    
+
     let dropdownHTML: JSX.Element[] = [];
     for (let relation in item.relations) {
         dropdownHTML.push(<option key={relation} value={relation}> {ProductService.getProduct(relation).name} </option>);

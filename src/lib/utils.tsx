@@ -87,7 +87,7 @@ export const CartService = {
             }
         }
         cart.push({"ID": ID, "subProductID": subProductID, "amount": amount} as CartItem);
-        
+
         return cart;
     },
 

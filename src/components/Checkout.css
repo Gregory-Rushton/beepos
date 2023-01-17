@@ -1,12 +1,26 @@
 .checkout-container {
-    width: 35%;
+    margin-left: 5%;
+    width: 40%;
     background-color: lightgrey;
 }
 
-.checkout-items {
-    text-align: left;
+.checkout-container label {
+    font-size: 25px;
+    margin-left: 45%;
+}
+
+.checkout-items {}
+.checkout-item {}
+
+.checkout-items table {
+    margin: auto;
+}
+
+.checkout-item td {
+    padding: 5px;
 }
 
 .checkout-item input {
     width: 50px;
 }
+

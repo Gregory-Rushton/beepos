@@ -22,13 +22,20 @@ const CreateCartItem = (element: CartItem) => {
     const [amount, setAmount] = useState(0);
     const [product, setProduct] = useState({} as Product);
     const [subproduct, setSubproduct] = useState({} as Product);
-    const [relation, setRelation] = useState({} as Relation);
+    const [relation, setRelation] = useState({"price": 0} as Relation);
+    const [textColor, setTextColor] = useState({"color": "black"} as Object);
 
     const updateAmount = (newAmount: number) => {
+        newAmount = Math.max(0, newAmount);
         setAmount(newAmount);
         let cart: CartItem[] = CartService.setItemAmount(CartService.getCartItems(), element.ID, element.subProductID, newAmount);
         CartService.saveCart(cart);
-    
+
+        if(newAmount === 0) {
+            setTextColor({"color": "grey"});
+            return;
+        }
+        setTextColor({"color": "black"});
     }
 
     useEffect(() => {
@@ -39,15 +46,15 @@ const CreateCartItem = (element: CartItem) => {
     }, [])
 
 
-    return (<tr key={`${element.ID}|${element.subProductID}`} className="checkout-item">
+    return (<tr key={`${element.ID}|${element.subProductID}`} className="checkout-item" style={textColor}>
         <td>
             {subproduct.name} {product.name}
         </td>
         <td>
-            ${relation.price}
+            ${relation.price.toFixed(2)}
         </td>
         <td>
-            x<input type="number" defaultValue={element.amount} onChange={(event) => {updateAmount(event.target.value as unknown as number)}}/>
+            x<input type="number" min={0} defaultValue={element.amount} onChange={(event) => {updateAmount(event.target.value as unknown as number)}}/>
         </td>
         <td>
             (${(amount * relation.price).toFixed(2)})
@@ -65,8 +72,11 @@ function CheckoutMenu() {
 
     return (
         <div className="checkout-container">
-            <label>Cart:</label><br/>
-            
+            <br />
+            <label>Cart:</label>
+            <br/>
+            <br/>
+
             <div className="checkout-items">
                 <table>
                     <tbody>
@@ -90,7 +100,7 @@ function FinalizeMenu() {
 function Checkout() {
 
 
-    ProductService.setProductList();    
+    ProductService.setProductList();
 
     return (
         <div>
