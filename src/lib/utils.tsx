@@ -91,6 +91,17 @@ export const CartService = {
         return cart;
     },
 
+    setItemAmount: (cart: CartItem[], ID: string, subProductID: string, newAmount: number) => {
+        for(let item in cart) {
+            if(cart[item].ID === ID && cart[item].subProductID === subProductID) {
+                cart[item].amount = newAmount;
+                return cart;
+            }
+        }
+
+        return cart;
+    },
+
     cartAsDropdown: (cart: CartItem[]) => {
         let html: JSX.Element[] = [];
         for(let i in cart) {

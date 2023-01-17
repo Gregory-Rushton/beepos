@@ -1,4 +1,12 @@
-.checkout-box {
+.checkout-container {
     width: 35%;
     background-color: lightgrey;
+}
+
+.checkout-items {
+    text-align: left;
+}
+
+.checkout-item input {
+    width: 50px;
 }
