@@ -60,7 +60,7 @@ const CreateCartItem = (element: CartItem) => {
             ${relation.price.toFixed(2)}
         </td>
         <td>
-            x<input type="number" min={0} defaultValue={element.amount} onChange={(event) => {updateAmount(event.target.value as unknown as number)}}/>
+            <input type="number" min={0} defaultValue={element.amount} onChange={(event) => {updateAmount(event.target.value as unknown as number)}}/>
         </td>
         <td>
             (${(amount * relation.price).toFixed(2)})

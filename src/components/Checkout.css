@@ -1,13 +1,14 @@
 .leftside-position {
     position:absolute;
     top: 150px;
-    left: 100px;
+    left: 50%;
+    transform: translate(-110%, 0%);
 }
 .rightside-position {
     position:absolute;
     top: 150px;
-    right: 100px;
-
+    left: 50%;
+    transform: translate(10%, 0%);
 }
 
 
@@ -34,6 +35,7 @@
 
 .checkout-item td {
     padding-bottom: 20px;
+    min-width: 75px;
 }
 
 .checkout-item input {
