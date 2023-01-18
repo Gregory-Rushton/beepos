@@ -1,9 +1,9 @@
 import "./Header.css"
 import "./Checkout.css"
 
-import React, { useEffect, useState } from "react";
-import {ToastsContainer, ToastsContainerPosition, ToastsStore} from 'react-toasts'
-import  { AxiosError } from 'axios';
+import { useEffect, useState } from "react";
+import { ToastsStore } from 'react-toasts'
+import { AxiosError } from 'axios';
 
 import { CartService, ProductService } from "../lib/utils";
 import { Orders } from "../lib/ajax"
@@ -39,6 +39,7 @@ const CreateCartItem = (element: CartItem) => {
     const updateAmount = (newAmount: number) => {
         newAmount = Math.max(0, newAmount);
         setAmount(newAmount);
+
         let cart: CartItem[] = CartService.setItemAmount(CartService.getCartItems(), element.ID, element.subProductID, newAmount);
         CartService.saveCart(cart);
 
@@ -82,10 +83,10 @@ function CheckoutMenu() {
 
     let subtotal: number = CartService.getTotals(cart).cost as unknown as number;
     let tax: number = (subtotal * (process.env.REACT_APP_TAX as any)) as number;
-    let total = subtotal + tax;
+
     cartItems.push(<tr key="a"> <td> Subtotal: </td><td/><td/><td> ${subtotal.toFixed(2)} </td>  </tr>)
     cartItems.push(<tr key="b"> <td> Tax:      </td><td/><td/><td> + ${tax.toFixed(2)}    </td>  </tr>)
-    cartItems.push(<tr key="c"> <td> Total:    </td><td/><td/><td> ${total.toFixed(2)}    </td>  </tr>)
+    cartItems.push(<tr key="c"> <td> Total:    </td><td/><td/><td> ${(subtotal + tax).toFixed(2)}    </td>  </tr>)
 
     return (
         <div className="checkout-container">
@@ -124,14 +125,13 @@ function FinalizeMenu() {
             const data = response.data as CreateOrderResponse;
             
             CartService.saveCart([] as CartItem[]);
+
             setTimeout(() => {
                 window.location.href = `/viewOrder?orderId=${data.orderID}&viewKey=${data.viewKey}`;
             }, 1500);
 
         } catch(error) {
-            const err = error as AxiosError;
-            const data = err.response?.data as JSON;
-            console.log(data);
+            const data = (error as AxiosError).response?.data as JSON;
             ToastsStore.error(`There was an error placing your order: ${data["response" as keyof typeof data]}`);
         }
     }
@@ -187,22 +187,15 @@ function FinalizeMenu() {
 }
 
 function Checkout() {
-    const [state, setState] = useState<Product[]>([]);
     const [checkoutMenuHTML, setCheckoutMenuHTML] = useState(<a>Loading</a>);
 
     useEffect(() => {
         const init = async() => {
-            setState(await ProductService.setProductList());
+            await ProductService.setProductList();
+            setCheckoutMenuHTML(<CheckoutMenu />);
         }
         init();
     }, []);
-
-
-    useEffect(() => {
-        if(state.length > 0) {
-            setCheckoutMenuHTML(<CheckoutMenu />);
-        }
-    }, [state])
 
     return (
         <div>
