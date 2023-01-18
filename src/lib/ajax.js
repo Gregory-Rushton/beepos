@@ -13,16 +13,14 @@ export const Orders = {
     add: async (cart, name, email, phone, address) => {
         const url = `${process.env.REACT_APP_BACKEND_URL}/orders/add`
         const response = await axios.post(url, { 
-            data: {
-                "wantsToReceiveEmails": true,
-                "Order": {
-                    "name": name,
-                    "email": email,
-                    "address": address,
-                    "phoneNumber": phone
-                },
-                "Items": cart
-            }
+            "wantsToReceiveEmails": true,
+            "Order": {
+                "name": name,
+                "email": email,
+                "address": address,
+                "phoneNumber": phone
+            },
+            "Items": cart
         })
         return response
     }

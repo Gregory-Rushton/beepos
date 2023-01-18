@@ -38,7 +38,7 @@ export const ProductService = {
 
     getRelation: (id: string, subProductID: string) => {
         let product = ProductService.getProduct(id);
-        if(product.relations[subProductID as keyof typeof product.relations] as Object as Relation == undefined) {
+        if(product.relations[subProductID as keyof typeof product.relations] as Object as Relation === undefined) {
             return {"price": 0.00, "imageURL": "about:blank"} as Object as Relation;
         }
         return product.relations[subProductID as keyof typeof product.relations] as Object as Relation;

@@ -2,13 +2,16 @@ import "./Header.css"
 import "./Checkout.css"
 
 import React, { useEffect, useState } from "react";
+import {ToastsContainer, ToastsContainerPosition, ToastsStore} from 'react-toasts'
+import  { AxiosError } from 'axios';
 
 import { CartService, ProductService } from "../lib/utils";
 import { Orders } from "../lib/ajax"
 import { CartItem } from '../models/CartItem'
 import { Product } from "../models/Product";
 import { Relation } from "../models/Relation";
-import Cart from "./Cart";
+import { CreateOrderResponse } from "../models/CreateOrderResponse";
+
 
 function simpleHeader() {
     return (
@@ -27,11 +30,11 @@ function simpleHeader() {
 
 const CreateCartItem = (element: CartItem) => {
 
-    const [amount, setAmount] = useState(0);
-    const [product, setProduct] = useState({} as Product);
-    const [subproduct, setSubproduct] = useState({} as Product);
-    const [relation, setRelation] = useState({"price": 0} as Relation);
-    const [textColor, setTextColor] = useState({"color": "black"} as Object);
+    const [amount, setAmount] = useState<number>(0);
+    const [product, setProduct] = useState<Product>({} as Product);
+    const [subproduct, setSubproduct] = useState<Product>({} as Product);
+    const [relation, setRelation] = useState<Relation>({"price": 0} as Relation);
+    const [textColor, setTextColor] = useState<Object>({"color": "black"} as Object);
 
     const updateAmount = (newAmount: number) => {
         newAmount = Math.max(0, newAmount);
@@ -39,11 +42,7 @@ const CreateCartItem = (element: CartItem) => {
         let cart: CartItem[] = CartService.setItemAmount(CartService.getCartItems(), element.ID, element.subProductID, newAmount);
         CartService.saveCart(cart);
 
-        if(newAmount === 0) {
-            setTextColor({"color": "grey"});
-            return;
-        }
-        setTextColor({"color": "black"});
+        setTextColor({"color": newAmount===0 ? "grey" : "black"} as Object);
     }
 
     useEffect(() => {
@@ -51,6 +50,7 @@ const CreateCartItem = (element: CartItem) => {
         setProduct(ProductService.getProduct(element.ID));
         setSubproduct(ProductService.getProduct(element.subProductID));
         setRelation(ProductService.getRelation(element.ID, element.subProductID));
+        setTextColor({"color": element.amount===0 ? "grey" : "black"} as Object);
     }, [])
 
 
@@ -98,9 +98,9 @@ function CheckoutMenu() {
                 <table>
                     <tbody>
                         {cartItems}
+                Payment will be exchanged when the items are delivered 
                     </tbody>
                 </table>
-                Payment will be exchanged when the items are delivered 
                 <br /><br />
             </div>
         </div>
@@ -118,8 +118,21 @@ function FinalizeMenu() {
     const [street, setStreet] = useState("");
 
     const placeOrder = async() => {
-        let response = await Orders.add(CartService.getCartItems(), name, email, phone, `${street} ${city} ${state}`);
-        console.log(response);
+        try {
+            let response = await Orders.add(CartService.getCartItems(), name, email, phone, `${street} ${city} ${state}`);
+            ToastsStore.success(`Order has been placed!`);
+            const data = response.data as CreateOrderResponse;
+
+            setTimeout(() => {
+                window.location.href = `/viewOrder?orderId=${data.orderID}&viewKey=${data.viewKey}`;
+            }, 1500);
+
+        } catch(error) {
+            const err = error as AxiosError;
+            const data = err.response?.data as JSON;
+            console.log(data);
+            ToastsStore.error(`There was an error placing your order: ${data["response" as keyof typeof data]}`);
+        }
     }
 
     return (
