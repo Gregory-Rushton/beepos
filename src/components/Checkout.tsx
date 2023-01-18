@@ -122,7 +122,8 @@ function FinalizeMenu() {
             let response = await Orders.add(CartService.getCartItems(), name, email, phone, `${street} ${city} ${state}`);
             ToastsStore.success(`Order has been placed!`);
             const data = response.data as CreateOrderResponse;
-
+            
+            CartService.saveCart([] as CartItem[]);
             setTimeout(() => {
                 window.location.href = `/viewOrder?orderId=${data.orderID}&viewKey=${data.viewKey}`;
             }, 1500);
