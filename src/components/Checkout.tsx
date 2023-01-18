@@ -98,9 +98,9 @@ function CheckoutMenu() {
                 <table>
                     <tbody>
                         {cartItems}
-                Payment will be exchanged when the items are delivered 
                     </tbody>
                 </table>
+                Payment will be exchanged when the items are delivered 
                 <br /><br />
             </div>
         </div>
