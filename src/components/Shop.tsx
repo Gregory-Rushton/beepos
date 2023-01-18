@@ -37,7 +37,7 @@ function CreateHTML(item: Product, position: number) {
     }
 
     const addToCart = () => {
-        let cart: CartItem[] = CartService.addToCart(CartService.getCartItems(), item.id, selectedSubProduct, Math.max(quantity, 1)) as CartItem[];
+        let cart: CartItem[] = CartService.addToCart(CartService.getCartItems(), item.id, selectedSubProduct, quantity) as CartItem[];
         CartService.saveCart(cart);
         ToastsStore.info(`Added ${item.name} to Cart`);
     }
@@ -86,7 +86,7 @@ function CreateHTML(item: Product, position: number) {
                 </td>
 
                 <td style={{textAlign: 'right'}}>
-                    <input onChange={event => handleCountChange(event)} type="number" className="quantityBox"/> Quantity
+                    <input onChange={event => handleCountChange(event)} defaultValue={1 as number} min={1} type="number" className="quantityBox"/> Quantity
                 </td>
             </tr>
 
