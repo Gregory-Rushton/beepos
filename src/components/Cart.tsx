@@ -7,11 +7,11 @@ function Cart() {
 
     const [cartHTML, setCartHTML] = useState([<a key={0}></a>])
 
-    const populateCartItemList = (cartItems: CartItem[]) => {
+    const populateCartItemList = async(cartItems: CartItem[]) => {
         let html: JSX.Element[] = [];
         for (let i in cartItems) {
             html[i] =
-                <a key={`${cartItems[i].ID}|${cartItems[i].subProductID}`}>{CartService.stringify(cartItems[i])}</a>;
+                <a key={`${cartItems[i].ID}|${cartItems[i].subProductID}`}>{await CartService.stringify(cartItems[i])}</a>;
         }
         html.push(<a key="checkout" href="/checkout">Checkout</a>);
         return html;
@@ -19,7 +19,7 @@ function Cart() {
  
     return (
         <div className="dropdown">
-            <button key={"a0"} onMouseEnter={ () => setCartHTML(populateCartItemList(CartService.getCartItems())) } className="dropbtn">Cart</button>
+            <button key={"a0"} onMouseEnter={ async() => setCartHTML(await populateCartItemList(CartService.getCartItems())) } className="dropbtn">Cart</button>
             <div key={"a1"} className="dropdown-content">
                 {cartHTML}
             </div>

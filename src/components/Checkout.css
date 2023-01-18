@@ -5,7 +5,7 @@
     transform: translate(-110%, 0%);
 }
 .rightside-position {
-    position:absolute;
+    position: absolute;
     top: 150px;
     left: 50%;
     transform: translate(10%, 0%);
@@ -13,8 +13,7 @@
 
 
 .checkout-container {
-    margin-left: 5%;
-    /* width: 35%; */
+    text-align: center;
     background-color: lightgrey;
 }
 
@@ -27,6 +26,7 @@
 .checkout-item {}
 
 .checkout-items table {
+    text-align: left;
     margin: auto;
     padding-left: 50px;
     padding-right: 50px;
@@ -45,5 +45,15 @@
 /*Finalize Menu*/
 
 .finalize-container {
+    text-align: center;
+    background-color: lightgrey;
+}
 
+.finalize-container table {
+    padding-left: 75px;
+    padding-right: 75px;
+}
+
+.finalize-container td {
+    padding-bottom: 20px;
 }

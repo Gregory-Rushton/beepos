@@ -1,12 +1,14 @@
 import "./Header.css"
 import "./Checkout.css"
 
-import {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import { CartService, ProductService } from "../lib/utils";
+import { Orders } from "../lib/ajax"
 import { CartItem } from '../models/CartItem'
 import { Product } from "../models/Product";
 import { Relation } from "../models/Relation";
+import Cart from "./Cart";
 
 function simpleHeader() {
     return (
@@ -70,23 +72,25 @@ const CreateCartItem = (element: CartItem) => {
 
 
 function CheckoutMenu() {
+
     const cart = CartService.getCartItems();
+
     let cartItems: JSX.Element[] = [];
     cart.forEach((element, i) => {
         cartItems.push(CreateCartItem(element));
     })
 
     let subtotal: number = CartService.getTotals(cart).cost as unknown as number;
-    let tax: number = (subtotal * 0.0625) as number;
+    let tax: number = (subtotal * (process.env.REACT_APP_TAX as any)) as number;
     let total = subtotal + tax;
-    cartItems.push(<tr key="a"> <td> Subtotal: </td> <td/> <td/> <td> ${subtotal.toFixed(2)} </td>  </tr>)
-    cartItems.push(<tr key="b"> <td> Tax:      </td> <td/> <td/> <td> + ${tax.toFixed(2)}    </td>  </tr>)
-    cartItems.push(<tr key="c"> <td> Total:    </td> <td/> <td/> <td> ${total.toFixed(2)}    </td>  </tr>)
+    cartItems.push(<tr key="a"> <td> Subtotal: </td><td/><td/><td> ${subtotal.toFixed(2)} </td>  </tr>)
+    cartItems.push(<tr key="b"> <td> Tax:      </td><td/><td/><td> + ${tax.toFixed(2)}    </td>  </tr>)
+    cartItems.push(<tr key="c"> <td> Total:    </td><td/><td/><td> ${total.toFixed(2)}    </td>  </tr>)
 
     return (
         <div className="checkout-container">
             <br />
-            <label>Cart:</label>
+            <h2>Cart</h2>
             <br/>
             <br/>
 
@@ -96,38 +100,106 @@ function CheckoutMenu() {
                         {cartItems}
                     </tbody>
                 </table>
+                Payment will be exchanged when the items are delivered 
+                <br /><br />
             </div>
         </div>
     )
 }
 
 function FinalizeMenu() {
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+
+    const [state, setState] = useState("");
+    const [city, setCity] = useState("");
+    const [street, setStreet] = useState("");
+
+    const placeOrder = async() => {
+        let response = await Orders.add(CartService.getCartItems(), name, email, phone, `${street} ${city} ${state}`);
+        console.log(response);
+    }
+
     return (
         <div className="finalize-container">
-            <a>Finalize</a>
+
+            <br />
+            <h2>Contact Information</h2>
+            <br /><br />
+
+            <table>
+                <tbody>
+                    <tr>
+                        <td> <label>Name</label> </td>
+                        <td> <input onChange={(event) => {setName(event.target.value as unknown as string)}} /> </td>
+                    </tr>
+                    <tr>
+                        <td> <label>Email</label> </td>
+                        <td> <input onChange={(event) => {setEmail(event.target.value as unknown as string)}} /> </td>
+                    </tr>
+                    <tr>
+                        <td> <label>Phone</label> </td>
+                        <td> <input onChange={(event) => {setPhone(event.target.value as unknown as string)}} /> </td>
+                    </tr>
+                    <tr>
+                        <td/>
+                        <td> <label>Address</label> </td>
+                    </tr>
+                    <tr>
+                        <td> <label>State</label> </td>
+                        <td> <input onChange={(event) => {setState(event.target.value as unknown as string)}} /> </td>
+                    </tr>
+                    <tr>
+                        <td> <label>City</label> </td>
+                        <td> <input onChange={(event) => {setCity(event.target.value as unknown as string)}}/> </td>
+                    </tr>
+                    <tr>
+                        <td> <label>Street</label> </td>
+                        <td> <input onChange={(event) => {setStreet(event.target.value as unknown as string)}}/> </td>
+                    </tr>
+                    
+
+                </tbody>
+            </table>
+
+            <button onClick={(event) => {placeOrder()}}> Place Order </button>
+            <br />
+            <br />
+
         </div>
     );
 }
 
-
 function Checkout() {
+    const [state, setState] = useState<Product[]>([]);
+    const [checkoutMenuHTML, setCheckoutMenuHTML] = useState(<a>Loading</a>);
+
+    useEffect(() => {
+        const init = async() => {
+            setState(await ProductService.setProductList());
+        }
+        init();
+    }, []);
 
 
-    ProductService.setProductList();
+    useEffect(() => {
+        if(state.length > 0) {
+            setCheckoutMenuHTML(<CheckoutMenu />);
+        }
+    }, [state])
 
     return (
         <div>
             {simpleHeader()}
-            
             <div className="leftside-position">
-                {CheckoutMenu()}
+                {checkoutMenuHTML}
             </div>
-
             <div className="rightside-position">
-                {FinalizeMenu()}
+                <FinalizeMenu />
             </div>
-
-        </div>
+         </div>
     );
 }
 
