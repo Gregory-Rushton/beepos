@@ -1,15 +1,13 @@
 import "./Shop.css";
 
-import ReactDOM from 'react-dom/client';
 import {useEffect, useState} from "react";
-import {ToastsContainer, ToastsContainerPosition, ToastsStore} from 'react-toasts'
+import {ToastsStore} from 'react-toasts'
 
 import * as utils from "../lib/utils";
 import {Product} from "../models/Product";
 import {Relation} from "../models/Relation";
 import {CartItem} from "../models/CartItem";
 import {ProductService, CartService} from "../lib/utils";
-import Checkout from "./Checkout"
 
 
 //The honey and items shop code is too similar it can be put into one file
@@ -19,7 +17,7 @@ function CreateHTML(item: Product, position: number) {
 
     const [price, setPrice] = useState(0.0);
     const [imageURL, setImageURL] = useState(item.imageURL);
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
     const [selectedSubProduct, setSelectedSubProduct] = useState("");
 
     const handleCountChange = (event: any) => {
