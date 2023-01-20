@@ -10,6 +10,8 @@
 
 # production
 /build
+Dockerfile
+nginx.conf
 
 # misc
 .DS_Store
