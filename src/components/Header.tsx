@@ -39,6 +39,7 @@ function Header() {
     }
 
     useEffect(() => {
+        document.title = "Bee Positive Apiary";
         const init = async () => {
             setProducts(await ProductService.setProductList());
         }

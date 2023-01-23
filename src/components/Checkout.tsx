@@ -190,6 +190,7 @@ function Checkout() {
     const [checkoutMenuHTML, setCheckoutMenuHTML] = useState(<a>Loading</a>);
 
     useEffect(() => {
+        document.title = "Bee Positive Apiary";
         const init = async() => {
             await ProductService.setProductList();
             setCheckoutMenuHTML(<CheckoutMenu />);
