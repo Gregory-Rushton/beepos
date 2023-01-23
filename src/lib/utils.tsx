@@ -2,7 +2,7 @@ import {Database} from "./ajax.js";
 import {Relation} from "../models/Relation";
 import {Product} from "../models/Product";
 import {CartItem} from "../models/CartItem";
-import productsJson from "../resources/products.json";
+// import productsJson from "../resources/products.json";
 
 export let productList: Product[] = [];
 
@@ -10,8 +10,8 @@ export let productList: Product[] = [];
 export const ProductService = {
 
     setProductList: async () => {
-        // let response: JSON = ((await Database.getProducts()) as unknown as JSON)["response" as keyof JSON] as unknown as JSON;
-        // let productsJson: JSON[] = response["products" as keyof JSON] as unknown as JSON[];
+        let response: JSON = ((await Database.getProducts()) as unknown as JSON)["response" as keyof JSON] as unknown as JSON;
+        let productsJson: JSON[] = response["products" as keyof JSON] as unknown as JSON[];
         
         productsJson.map((p, idx) => productList[idx] = p as Object as Product);
         return productList;
