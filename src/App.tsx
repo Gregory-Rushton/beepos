@@ -10,19 +10,18 @@ import Checkout from './components/Checkout';
 function App() {
     return (
         <BrowserRouter>
-                <ToastsContainer position={ToastsContainerPosition.BOTTOM_RIGHT} store={ToastsStore}/>
-                <Routes>
-                    <Route path="/">
-                        <Route index element={
-                            <GoogleOAuthProvider clientId="521335006932-7p7d097e7urevemv8v04djf67jj75atk.apps.googleusercontent.com">
-                                <Header />
-                            </GoogleOAuthProvider>
-                        } />
-                        <Route path="/checkout" element={<Checkout />} />
-                    </Route>
-                </Routes>
-            </BrowserRouter>
-        
+            <ToastsContainer position={ToastsContainerPosition.BOTTOM_RIGHT} store={ToastsStore}/>
+            <Routes>
+                <Route path="/">
+                    <Route index element={
+                        <GoogleOAuthProvider clientId="521335006932-7p7d097e7urevemv8v04djf67jj75atk.apps.googleusercontent.com">
+                            <Header />
+                        </GoogleOAuthProvider>
+                    } />
+                    <Route path="/checkout" element={<Checkout />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 
