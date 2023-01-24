@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import {GoogleLogin} from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
+import Cookies from 'universal-cookie';
 
 import Home from './Home';
 import {Honey, Items} from './Shop';
@@ -27,7 +28,8 @@ function Header() {
             <GoogleLogin
                 onSuccess={credentialResponse => {
                     const credential = jwtDecode<Credential>((credentialResponse as Credential).credential);
-                    console.log(credential);
+                    const cookies = new Cookies();
+                    cookies.set("auth", (credentialResponse as Credential).credential, { path: '/' });
                 }}
                 onError={() => {
                     console.log('Login Failed');
