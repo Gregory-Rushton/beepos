@@ -6,6 +6,7 @@ import {ToastsContainer, ToastsContainerPosition, ToastsStore} from 'react-toast
 import './App.css';
 import Header from './components/Header';
 import Checkout from './components/Checkout';
+import ViewOrder from './components/ViewOrder';
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                         </GoogleOAuthProvider>
                     } />
                     <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/viewOrder" element={<ViewOrder />} />
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -13,7 +13,7 @@ import { Relation } from "../models/Relation";
 import { CreateOrderResponse } from "../models/CreateOrderResponse";
 
 
-function simpleHeader() {
+export function simpleHeader(title: string) {
     return (
         <div>
             <div className="header" style={{border: "1px solid black"}}>
@@ -21,7 +21,7 @@ function simpleHeader() {
             </div>
 
             <div className="header">
-                <h2>Checkout</h2>
+                <h2>{title}</h2>
             </div>
         </div>
     );
@@ -127,7 +127,7 @@ function FinalizeMenu() {
             CartService.saveCart([] as CartItem[]);
 
             setTimeout(() => {
-                window.location.href = `/viewOrder?orderId=${data.orderID}&viewKey=${data.viewKey}`;
+                window.location.href = `/viewOrder?orderID=${data.orderID}&viewKey=${data.viewKey}`;
             }, 1500);
 
         } catch(error) {
@@ -200,7 +200,7 @@ function Checkout() {
 
     return (
         <div>
-            {simpleHeader()}
+            {simpleHeader("Checkout")}
             <div className="leftside-position">
                 {checkoutMenuHTML}
             </div>
