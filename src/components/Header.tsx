@@ -29,7 +29,7 @@ function Header() {
                 onSuccess={credentialResponse => {
                     const credential = jwtDecode<Credential>((credentialResponse as Credential).credential);
                     const cookies = new Cookies();
-                    cookies.set("auth", (credentialResponse as Credential).credential, { path: '/' });
+                    cookies.set("auth", (credentialResponse as Credential).credential, { path: '/' , sameSite: false, domain: process.env.REACT_APP_COOKIE_DOMAIN});
                 }}
                 onError={() => {
                     console.log('Login Failed');

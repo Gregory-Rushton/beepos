@@ -46,4 +46,5 @@ REACT_APP_TAX=0.0625
 REACT_APP_BACKEND_URL=http://localhost:3001
 REACT_APP_FRONTEND_URL=http://localhost:3000
 REACT_APP_CDN_URL=https://cdn.example.com
+REACT_APP_COOKIE_DOMAIN=localhost
 ```
