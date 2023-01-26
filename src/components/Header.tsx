@@ -3,10 +3,12 @@ import React, {useEffect, useState} from 'react';
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import {GoogleLogin} from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
+import Cookies from 'universal-cookie';
 
 import Home from './Home';
 import {Honey, Items} from './Shop';
 import Cart from "./Cart";
+
 import * as utils from "../lib/utils";
 import {ProductService, CartService} from "../lib/utils";
 import {Credential} from '../models/Credential';
@@ -26,7 +28,8 @@ function Header() {
             <GoogleLogin
                 onSuccess={credentialResponse => {
                     const credential = jwtDecode<Credential>((credentialResponse as Credential).credential);
-                    console.log(credential);
+                    const cookies = new Cookies();
+                    cookies.set("auth", (credentialResponse as Credential).credential, { path: '/' , sameSite: false, domain: process.env.REACT_APP_COOKIE_DOMAIN});
                 }}
                 onError={() => {
                     console.log('Login Failed');
@@ -38,8 +41,8 @@ function Header() {
     }
 
     useEffect(() => {
+        document.title = "Bee Positive Apiary";
         const init = async () => {
-            await utils.setUser();
             setProducts(await ProductService.setProductList());
         }
         init();
@@ -56,6 +59,7 @@ function Header() {
                         <Tab>Products from the Hive</Tab>
                         <Tab>About Us</Tab>
                     </TabList>
+
 
                     <TabPanel><Home/></TabPanel>
                     <TabPanel><Honey/></TabPanel>

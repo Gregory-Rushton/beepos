@@ -1,11 +1,14 @@
 import "./Shop.css";
 
 import {useEffect, useState} from "react";
+import {ToastsStore} from 'react-toasts'
+
 import * as utils from "../lib/utils";
 import {Product} from "../models/Product";
 import {Relation} from "../models/Relation";
 import {CartItem} from "../models/CartItem";
 import {ProductService, CartService} from "../lib/utils";
+
 
 //The honey and items shop code is too similar it can be put into one file
 
@@ -14,28 +17,29 @@ function CreateHTML(item: Product, position: number) {
 
     const [price, setPrice] = useState(0.0);
     const [imageURL, setImageURL] = useState(item.imageURL);
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
     const [selectedSubProduct, setSelectedSubProduct] = useState("");
-    
+
     const handleCountChange = (event: any) => {
         setQuantity(event.target.value);
     }
-    
-    const addToCart = () => {
-        let cart: CartItem[] = CartService.addToCart(CartService.getCartItems(), item.id, selectedSubProduct, Math.max(quantity, 1)) as CartItem[];
-        CartService.saveCart(cart);
-    }
-    
+
     const updateSubProduct = (subProductID: string) => {
         setSelectedSubProduct(subProductID);
-        
+
         let related: keyof typeof item.relations = selectedSubProduct as keyof typeof item.relations;
         let relation: Relation = utils.createRelation(item.relations[related]);
-        
+
         setPrice(relation.price);
         setImageURL(relation.imageURL);
     }
-    
+
+    const addToCart = () => {
+        let cart: CartItem[] = CartService.addToCart(CartService.getCartItems(), item.id, selectedSubProduct, quantity) as CartItem[];
+        CartService.saveCart(cart);
+        ToastsStore.info(`Added ${item.name} to Cart`);
+    }
+
     let dropdownHTML: JSX.Element[] = [];
     for (let relation in item.relations) {
         dropdownHTML.push(<option key={relation} value={relation}> {ProductService.getProduct(relation).name} </option>);
@@ -80,7 +84,7 @@ function CreateHTML(item: Product, position: number) {
                 </td>
 
                 <td style={{textAlign: 'right'}}>
-                    <input onChange={event => handleCountChange(event)} type="number" className="quantityBox"/> Quantity
+                    <input onChange={event => handleCountChange(event)} defaultValue={1 as number} min={1} type="number" className="quantityBox"/> Quantity
                 </td>
             </tr>
 

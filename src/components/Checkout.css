@@ -1,0 +1,59 @@
+.leftside-position {
+    position:absolute;
+    top: 150px;
+    left: 50%;
+    transform: translate(-110%, 0%);
+}
+.rightside-position {
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    transform: translate(10%, 0%);
+}
+
+
+.checkout-container {
+    text-align: center;
+    background-color: lightgrey;
+}
+
+.checkout-container label {
+    font-size: 25px;
+    margin-left: 45%;
+}
+
+.checkout-items {}
+.checkout-item {}
+
+.checkout-items table {
+    text-align: left;
+    margin: auto;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 35px;
+}
+
+.checkout-item td {
+    padding-bottom: 20px;
+    min-width: 75px;
+}
+
+.checkout-item input {
+    width: 50px;
+}
+
+/*Finalize Menu*/
+
+.finalize-container {
+    text-align: center;
+    background-color: lightgrey;
+}
+
+.finalize-container table {
+    padding-left: 75px;
+    padding-right: 75px;
+}
+
+.finalize-container td {
+    padding-bottom: 20px;
+}

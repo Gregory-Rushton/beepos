@@ -1,25 +1,18 @@
-import {Auth, Database} from "./ajax.js";
-import {User} from "../models/User";
+import {Database} from "./ajax.js";
 import {Relation} from "../models/Relation";
 import {Product} from "../models/Product";
 import {CartItem} from "../models/CartItem";
-import productsJson from "../resources/products.json";
+// import productsJson from "../resources/products.json";
 
-export let user: User;
 export let productList: Product[] = [];
 
-export async function setUser() {
-    let response = {"response": {}}
-    try {
-        response = await Auth.getUser();
-    } catch {
-    }
-    user = (response["response"] as User);
-}
 
 export const ProductService = {
 
-    setProductList: () => {
+    setProductList: async () => {
+        let response: JSON = ((await Database.getProducts()) as unknown as JSON)["response" as keyof JSON] as unknown as JSON;
+        let productsJson: JSON[] = response["products" as keyof JSON] as unknown as JSON[];
+        
         productsJson.map((p, idx) => productList[idx] = p as Object as Product);
         return productList;
     },
@@ -40,11 +33,14 @@ export const ProductService = {
                 return productList[element];
             }
         }
-        return ({} as Product);
+        return ({"relations": {}} as Product);
     },
 
     getRelation: (id: string, subProductID: string) => {
         let product = ProductService.getProduct(id);
+        if(product.relations[subProductID as keyof typeof product.relations] as Object as Relation === undefined) {
+            return {"price": 0.00, "imageURL": "about:blank"} as Object as Relation;
+        }
         return product.relations[subProductID as keyof typeof product.relations] as Object as Relation;
     }
 
@@ -80,9 +76,6 @@ export const CartService = {
     },
 
     addToCart: (cart: CartItem[], ID: string, subProductID: string, amount: number) => {
-
-        console.log(ID, subProductID);
-
         for(let item in cart) {
             if(cart[item].ID === ID && cart[item].subProductID === subProductID) {
                 cart[item].amount += amount;
@@ -90,25 +83,49 @@ export const CartService = {
             }
         }
         cart.push({"ID": ID, "subProductID": subProductID, "amount": amount} as CartItem);
-        
+
         return cart;
     },
 
-    cartAsDropdown: (cart: CartItem[]) => {
+    setItemAmount: (cart: CartItem[], ID: string, subProductID: string, newAmount: number) => {
+        for(let item in cart) {
+            if(cart[item].ID === ID && cart[item].subProductID === subProductID) {
+                cart[item].amount = newAmount;
+                return cart;
+            }
+        }
+
+        return cart;
+    },
+
+    cartAsDropdown: async (cart: CartItem[]) => {
         let html: JSX.Element[] = [];
         for(let i in cart) {
-            html[i] = <a>{CartService.stringify(cart[i])}</a>;
+            html[i] = <a>{await CartService.stringify(cart[i])}</a>;
         }
         return html;
     },
 
-    stringify: (item: CartItem) => {
-        productList = ProductService.setProductList();
+    getTotals: (cart: CartItem[]) => {
+        let totalCost: number = 0.0;
+        let totalItems: number = 0;
+
+        cart.forEach((element, i) => {
+            totalItems += element.amount;
+            let relation = ProductService.getRelation(element.ID, element.subProductID);
+            totalCost += relation.price * element.amount;
+        })
+
+        return {"items": totalItems, "cost": totalCost};
+    },
+
+    stringify: async (item: CartItem) => {
+        productList = await ProductService.setProductList();
         let product: Product = ProductService.getProduct(item.ID);
         let subProduct: Product = ProductService.getProduct(item.subProductID);
         let relation: Relation = ProductService.getRelation(item.ID, item.subProductID);
 
-        return `$${item.amount}x ${subProduct.name == "" ? "" : `${subProduct.name} of`} ${product.name} ($${relation.price * item.amount})`
+        return `$${item.amount}x ${subProduct.name === "" ? "" : `${subProduct.name} of`} ${product.name} ($${relation.price * item.amount})`
     }
 }
 
