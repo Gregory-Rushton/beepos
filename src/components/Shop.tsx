@@ -16,7 +16,7 @@ import {ProductService, CartService} from "../lib/utils";
 function CreateHTML(item: Product, position: number) {
 
     const [price, setPrice] = useState(0.0);
-    const [imageURL, setImageURL] = useState(item.imageURL);
+    const [imageURL, setImageURL] = useState(`${process.env.REACT_APP_CDN_URL}/products/${item.id[0]}00/${item.id.slice(1)}.png`);
     const [quantity, setQuantity] = useState(1);
     const [selectedSubProduct, setSelectedSubProduct] = useState("");
 
@@ -27,11 +27,13 @@ function CreateHTML(item: Product, position: number) {
     const updateSubProduct = (subProductID: string) => {
         setSelectedSubProduct(subProductID);
 
-        let related: keyof typeof item.relations = selectedSubProduct as keyof typeof item.relations;
+		console.log(subProductID);
+
+        let related: keyof typeof item.relations = subProductID as keyof typeof item.relations;
         let relation: Relation = utils.createRelation(item.relations[related]);
 
         setPrice(relation.price);
-        setImageURL(relation.imageURL);
+        setImageURL(`${process.env.REACT_APP_CDN_URL}/relations/${item.id}/${subProductID}.png`);
     }
 
     const addToCart = () => {
@@ -64,6 +66,7 @@ function CreateHTML(item: Product, position: number) {
         setPrice(relation.price);
         setSelectedSubProduct(firstRelation.toString());
     }, []);
+
 
     return (
         <table className="table" style={inlineStyles} key={item.id}>
