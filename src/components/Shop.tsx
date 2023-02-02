@@ -27,8 +27,6 @@ function CreateHTML(item: Product, position: number) {
     const updateSubProduct = (subProductID: string) => {
         setSelectedSubProduct(subProductID);
 
-		console.log(subProductID);
-
         let related: keyof typeof item.relations = subProductID as keyof typeof item.relations;
         let relation: Relation = utils.createRelation(item.relations[related]);
 
