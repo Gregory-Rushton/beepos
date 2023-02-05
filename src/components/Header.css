@@ -23,11 +23,10 @@
 }
 
 .react-tabs__tab-panel {
-    border-top: 1px solid gray;
 }
 
 .react-tabs__tab-panel--selected {
-
+	border-top: 1px solid gray;
 }
 
 
