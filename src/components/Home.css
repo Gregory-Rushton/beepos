@@ -4,7 +4,7 @@
     text-align: center;
     vertical-align: middle;
     min-height: 350px;
-    background-image: linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://www.beepositiveapiary.com/images/Bee.JPG');
+    background-image: linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/bee.jpg');
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: cover;
