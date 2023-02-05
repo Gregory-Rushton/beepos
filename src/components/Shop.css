@@ -1,8 +1,8 @@
-.table {
+.itemTable {
     padding: 15px;
     background-color: #DDD;
-    position: absolute; 
-    left: 50%;
+    position: inline; 
+    /* left: 50%; */
     width: 375px;
     height: 375px;
     text-align: left;
@@ -35,4 +35,16 @@
 
 .buyButton {
     width: 60%;
+}
+
+.displayTable {
+	margin: auto;
+}
+
+.displayTable .tr {
+	padding: 20px;
+} 
+
+.displayTable .td {
+	padding: 20px;
 }
