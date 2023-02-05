@@ -45,6 +45,12 @@ function ProductElement({item, position}: {item: Product, position: number}) {
 			ToastsStore.error("This product's price is not set by the site administrator");
 			return;
 		}
+
+		if(item.stock != null && item.stock-quantity < 0) {
+			ToastsStore.error("Not enough stock left");
+			return;
+		}
+
         let cart: CartItem[] = CartService.addToCart(CartService.getCartItems(), item.id, selectedSubProduct, quantity) as CartItem[];
         CartService.saveCart(cart);
         ToastsStore.info(`Added ${item.name} to Cart`);
@@ -70,8 +76,10 @@ function ProductElement({item, position}: {item: Product, position: number}) {
 			setPrice(0);
 			setSelectedSubProduct("0");
 		}
-		if(item.stock <= 5 && item.stock != null) {
+		if(item.stock <= 5 && item.stock > 0 && item.stock != null) {
 			setStockNotifier(<label>Only {item.stock} Left!</label>);
+		} else if (item.stock == 0) {
+			setStockNotifier(<label>Item is out of stock</label>)
 		}
     }, []);
 
