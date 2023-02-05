@@ -20,14 +20,14 @@
 
 .react-tabs__tab-list {
     margin: 0;
+    border-bottom: 1px solid gray;
 }
 
 .react-tabs__tab-panel {
-    border-top: 1px solid gray;
 }
 
 .react-tabs__tab-panel--selected {
-
+	border-top: 1px solid gray;
 }
 
 

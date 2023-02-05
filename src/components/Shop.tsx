@@ -13,7 +13,7 @@ import {ProductService, CartService} from "../lib/utils";
 //The honey and items shop code is too similar it can be put into one file
 
 
-function CreateHTML(item: Product, position: number) {
+function ProductElement({item, position}: {item: Product, position: number}) {
 
     const [price, setPrice] = useState(0.0);
     const [imageURL, setImageURL] = useState(`${process.env.REACT_APP_CDN_URL}/products/${item.id[0]}00/${item.id.slice(1)}.png`);
@@ -26,8 +26,6 @@ function CreateHTML(item: Product, position: number) {
 
     const updateSubProduct = (subProductID: string) => {
         setSelectedSubProduct(subProductID);
-
-		console.log(subProductID);
 
         let related: keyof typeof item.relations = subProductID as keyof typeof item.relations;
         let relation: Relation = utils.createRelation(item.relations[related]);
@@ -57,7 +55,7 @@ function CreateHTML(item: Product, position: number) {
     );
 
     let inlineStyles = { //purely used for positioning the element. I use absolute positioning because its easier.
-        transform: `translate(${position % 2 === 0 ? "-110" : "10"}%, ${Math.floor(position / 2) * 110 + 10}%)`,
+        // transform: `translate(${position % 2 === 0 ? "-110" : "10"}%, ${Math.floor(position / 2) * 110 + 10}%)`,
     }
 
     useEffect(() => {
@@ -69,7 +67,7 @@ function CreateHTML(item: Product, position: number) {
 
 
     return (
-        <table className="table" style={inlineStyles} key={item.id}>
+        <table className="itemTable" style={inlineStyles} key={position}>
             <tbody>
             <tr className="itemTitleRow">
                 <td className="itemImage"><img src={imageURL} className="itemImage" alt={item.name}/></td>
@@ -111,13 +109,34 @@ function CreateAllHTML(location: string) {
 
     let allHTML: JSX.Element[] = [];
 
-    for (let element in productsOnPage) {
-        allHTML.push(CreateHTML(productsOnPage[element], parseInt(element)));
-    }
+	for(let i=0; i<productsOnPage.length; i += 2) {
+
+		let secondElement;
+		if(i+1 < productsOnPage.length) {
+			secondElement = <ProductElement key={i+1} item={productsOnPage[i+1]} position={i+1} />;
+		}
+		allHTML.push(
+		<tr className="displayTable tr">
+			<td className="displayTable td">
+				<ProductElement key={i} item={productsOnPage[i]} position={i} />
+			</td>
+			<td className="displayTable td">
+				{secondElement}
+			</td>
+		</tr>);
+
+	}
+
     return (
-        <div>
-            {allHTML}
-        </div>
+		<div>
+
+		<table className="displayTable">
+			<tbody>
+				{allHTML}
+			</tbody>
+		</table>
+
+		</div>
     );
 }
 

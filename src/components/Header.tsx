@@ -1,18 +1,20 @@
 import './Header.css';
+
 import React, {useEffect, useState} from 'react';
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import {GoogleLogin} from "@react-oauth/google";
-import jwtDecode from "jwt-decode";
+import { ToastsStore } from 'react-toasts';
 import Cookies from 'universal-cookie';
-
-import Home from './Home';
-import {Honey, Items} from './Shop';
-import Cart from "./Cart";
+import jwtDecode from "jwt-decode";
 
 import * as utils from "../lib/utils";
 import {ProductService, CartService} from "../lib/utils";
 import {Credential} from '../models/Credential';
 import {Product} from "../models/Product";
+
+import Home from './Home';
+import {Honey, Items} from './Shop';
+import Cart from "./Cart";
 
 function Header() {
 
@@ -27,10 +29,10 @@ function Header() {
         return <div style={{position: 'absolute', top: '10px', left: '10px'}}>
             <GoogleLogin
                 onSuccess={credentialResponse => {
-                    const credential = jwtDecode<Credential>((credentialResponse as Credential).credential);
                     const cookies = new Cookies();
                     cookies.set("auth", (credentialResponse as Credential).credential, { path: '/' , sameSite: false, domain: process.env.REACT_APP_COOKIE_DOMAIN});
-                }}
+					ToastsStore.success("Logged In");
+				}}
                 onError={() => {
                     console.log('Login Failed');
                 }}
@@ -44,6 +46,9 @@ function Header() {
         document.title = "Bee Positive Apiary";
         const init = async () => {
             setProducts(await ProductService.setProductList());
+			let cart = CartService.getCartItems();
+			cart = CartService.filterItemsWithNoQuantity(cart);
+			CartService.saveCart(cart);
         }
         init();
     }, []);

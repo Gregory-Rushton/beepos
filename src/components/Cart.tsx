@@ -7,11 +7,11 @@ function Cart() {
 
     const [cartHTML, setCartHTML] = useState([<a key={0}></a>])
 
-    const populateCartItemList = async(cartItems: CartItem[]) => {
-        let html: JSX.Element[] = [];
-        for (let i in cartItems) {
+    const populateCartItemList = async(cart: CartItem[]) => {
+		let html: JSX.Element[] = [];
+        for (let i in cart) {
             html[i] =
-                <a key={`${cartItems[i].ID}|${cartItems[i].subProductID}`}>{await CartService.stringify(cartItems[i])}</a>;
+                <a key={`${cart[i].ID}|${cart[i].subProductID}`}>{await CartService.stringify(cart[i])}</a>;
         }
         html.push(<a key="checkout" href="/checkout">Checkout</a>);
         return html;
