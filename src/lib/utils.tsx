@@ -67,6 +67,15 @@ export const CartService = {
         return items;
     },
 
+	filterItemsWithNoQuantity: (cart: CartItem[]) => {
+		let newCart: CartItem[] = [];
+		for(let i in cart) {
+			if(cart[i].amount === 0) { continue; }
+			newCart.push(cart[i]);
+		}
+		return newCart;
+	},
+
     saveCart: (cart: CartItem[]) => {
         let cartString: Object[] = [];
         for(let i in cart) {

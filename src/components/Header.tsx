@@ -46,6 +46,9 @@ function Header() {
         document.title = "Bee Positive Apiary";
         const init = async () => {
             setProducts(await ProductService.setProductList());
+			let cart = CartService.getCartItems();
+			cart = CartService.filterItemsWithNoQuantity(cart);
+			CartService.saveCart(cart);
         }
         init();
     }, []);
