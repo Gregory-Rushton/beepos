@@ -19,6 +19,7 @@ function ProductElement({item, position}: {item: Product, position: number}) {
     const [imageURL, setImageURL] = useState(`${process.env.REACT_APP_CDN_URL}/products/${item.id[0]}00/${item.id.slice(1)}.png`);
     const [quantity, setQuantity] = useState(1);
     const [selectedSubProduct, setSelectedSubProduct] = useState("");
+	const [stockNotifier, setStockNotifier] = useState(<a></a>);
 
     const handleCountChange = (event: any) => {
         setQuantity(event.target.value);
@@ -60,15 +61,17 @@ function ProductElement({item, position}: {item: Product, position: number}) {
     );
 
     useEffect(() => {
-		let firstRelation: keyof typeof item.relations;
 		try {
-			firstRelation = dropdownHTML[0].props.value;
+			let firstRelation: keyof typeof item.relations = dropdownHTML[0].props.value;
 			let relation: Relation = utils.createRelation(item.relations[firstRelation]);
 			setPrice(relation.price);
 			setSelectedSubProduct(firstRelation.toString());
 		} catch {
 			setPrice(0);
 			setSelectedSubProduct("0");
+		}
+		if(item.stock <= 5 && item.stock != null) {
+			setStockNotifier(<label>Only {item.stock} Left!</label>);
 		}
     }, []);
 
@@ -97,7 +100,9 @@ function ProductElement({item, position}: {item: Product, position: number}) {
             </tr>
 
             <tr style={{textAlign: 'right'}}>
-                <td></td>
+                <td style={{textAlign: "left"}}>
+					{stockNotifier}
+				</td>
                 <td>
                     <button onClick={(element) => {
                         addToCart();
