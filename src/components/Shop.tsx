@@ -34,16 +34,21 @@ function ProductElement({item, position}: {item: Product, position: number}) {
         setImageURL(`${process.env.REACT_APP_CDN_URL}/relations/${item.id}/${subProductID}.png`);
     }
 
+	let dropdownHTML: JSX.Element[] = [];
+	for (let relation in item.relations) {
+		dropdownHTML.push(<option key={relation} value={relation}> {ProductService.getProduct(relation).name} </option>);
+	}
+
     const addToCart = () => {
+		if(dropdownHTML.length === 0) {
+			ToastsStore.error("This product's price is not set by the site administrator");
+			return;
+		}
         let cart: CartItem[] = CartService.addToCart(CartService.getCartItems(), item.id, selectedSubProduct, quantity) as CartItem[];
         CartService.saveCart(cart);
         ToastsStore.info(`Added ${item.name} to Cart`);
     }
 
-    let dropdownHTML: JSX.Element[] = [];
-    for (let relation in item.relations) {
-        dropdownHTML.push(<option key={relation} value={relation}> {ProductService.getProduct(relation).name} </option>);
-    }
 
     let subProductHTML: JSX.Element = (
         <form>
@@ -54,20 +59,22 @@ function ProductElement({item, position}: {item: Product, position: number}) {
         </form>
     );
 
-    let inlineStyles = { //purely used for positioning the element. I use absolute positioning because its easier.
-        // transform: `translate(${position % 2 === 0 ? "-110" : "10"}%, ${Math.floor(position / 2) * 110 + 10}%)`,
-    }
-
     useEffect(() => {
-        let firstRelation: keyof typeof item.relations = dropdownHTML[0].props.value;
-        let relation: Relation = utils.createRelation(item.relations[firstRelation]);
-        setPrice(relation.price);
-        setSelectedSubProduct(firstRelation.toString());
+		let firstRelation: keyof typeof item.relations;
+		try {
+			firstRelation = dropdownHTML[0].props.value;
+			let relation: Relation = utils.createRelation(item.relations[firstRelation]);
+			setPrice(relation.price);
+			setSelectedSubProduct(firstRelation.toString());
+		} catch {
+			setPrice(0);
+			setSelectedSubProduct("0");
+		}
     }, []);
 
 
     return (
-        <table className="itemTable" style={inlineStyles} key={position}>
+        <table className="itemTable" key={position}>
             <tbody>
             <tr className="itemTitleRow">
                 <td className="itemImage"><img src={imageURL} className="itemImage" alt={item.name}/></td>
@@ -81,7 +88,7 @@ function ProductElement({item, position}: {item: Product, position: number}) {
 
             <tr style={{verticalAlign: "bottom"}}>
                 <td>
-                    {dropdownHTML.length === 1 ? null : subProductHTML}
+                    {dropdownHTML.length <= 1 ? null : subProductHTML}
                 </td>
 
                 <td style={{textAlign: 'right'}}>
