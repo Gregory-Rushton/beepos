@@ -19,6 +19,7 @@ function ProductElement({item, position}: {item: Product, position: number}) {
     const [imageURL, setImageURL] = useState(`${process.env.REACT_APP_CDN_URL}/products/${item.id[0]}00/${item.id.slice(1)}.png`);
     const [quantity, setQuantity] = useState(1);
     const [selectedSubProduct, setSelectedSubProduct] = useState("");
+	const [stockNotifier, setStockNotifier] = useState(<a></a>);
 
     const handleCountChange = (event: any) => {
         setQuantity(event.target.value);
@@ -34,16 +35,27 @@ function ProductElement({item, position}: {item: Product, position: number}) {
         setImageURL(`${process.env.REACT_APP_CDN_URL}/relations/${item.id}/${subProductID}.png`);
     }
 
+	let dropdownHTML: JSX.Element[] = [];
+	for (let relation in item.relations) {
+		dropdownHTML.push(<option key={relation} value={relation}> {ProductService.getProduct(relation).name} </option>);
+	}
+
     const addToCart = () => {
+		if(dropdownHTML.length === 0) {
+			ToastsStore.error("This product's price is not set by the site administrator");
+			return;
+		}
+
+		if(item.stock != null && item.stock-quantity < 0) {
+			ToastsStore.error("Not enough stock left");
+			return;
+		}
+
         let cart: CartItem[] = CartService.addToCart(CartService.getCartItems(), item.id, selectedSubProduct, quantity) as CartItem[];
         CartService.saveCart(cart);
         ToastsStore.info(`Added ${item.name} to Cart`);
     }
 
-    let dropdownHTML: JSX.Element[] = [];
-    for (let relation in item.relations) {
-        dropdownHTML.push(<option key={relation} value={relation}> {ProductService.getProduct(relation).name} </option>);
-    }
 
     let subProductHTML: JSX.Element = (
         <form>
@@ -54,20 +66,26 @@ function ProductElement({item, position}: {item: Product, position: number}) {
         </form>
     );
 
-    let inlineStyles = { //purely used for positioning the element. I use absolute positioning because its easier.
-        // transform: `translate(${position % 2 === 0 ? "-110" : "10"}%, ${Math.floor(position / 2) * 110 + 10}%)`,
-    }
-
     useEffect(() => {
-        let firstRelation: keyof typeof item.relations = dropdownHTML[0].props.value;
-        let relation: Relation = utils.createRelation(item.relations[firstRelation]);
-        setPrice(relation.price);
-        setSelectedSubProduct(firstRelation.toString());
+		try {
+			let firstRelation: keyof typeof item.relations = dropdownHTML[0].props.value;
+			let relation: Relation = utils.createRelation(item.relations[firstRelation]);
+			setPrice(relation.price);
+			setSelectedSubProduct(firstRelation.toString());
+		} catch {
+			setPrice(0);
+			setSelectedSubProduct("0");
+		}
+		if(item.stock <= 5 && item.stock > 0 && item.stock != null) {
+			setStockNotifier(<label>Only {item.stock} Left!</label>);
+		} else if (item.stock == 0) {
+			setStockNotifier(<label>Item is out of stock</label>)
+		}
     }, []);
 
 
     return (
-        <table className="itemTable" style={inlineStyles} key={position}>
+        <table className="itemTable" key={position}>
             <tbody>
             <tr className="itemTitleRow">
                 <td className="itemImage"><img src={imageURL} className="itemImage" alt={item.name}/></td>
@@ -81,7 +99,7 @@ function ProductElement({item, position}: {item: Product, position: number}) {
 
             <tr style={{verticalAlign: "bottom"}}>
                 <td>
-                    {dropdownHTML.length === 1 ? null : subProductHTML}
+                    {dropdownHTML.length <= 1 ? null : subProductHTML}
                 </td>
 
                 <td style={{textAlign: 'right'}}>
@@ -90,7 +108,9 @@ function ProductElement({item, position}: {item: Product, position: number}) {
             </tr>
 
             <tr style={{textAlign: 'right'}}>
-                <td></td>
+                <td style={{textAlign: "left"}}>
+					{stockNotifier}
+				</td>
                 <td>
                     <button onClick={(element) => {
                         addToCart();
