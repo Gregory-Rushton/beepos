@@ -101,7 +101,7 @@ function CheckoutMenu() {
                         {cartItems}
                     </tbody>
                 </table>
-                Payment will be exchanged when the items are delivered 
+                <a style={{margin: "10px"}}>Payment will be exchanged when the items are delivered </a>
                 <br /><br />
             </div>
         </div>
@@ -178,7 +178,7 @@ function FinalizeMenu() {
                 </tbody>
             </table>
 
-            <button onClick={(event) => {placeOrder()}}> Place Order </button>
+            <button className="btn active" onClick={(event) => {placeOrder()}}> Place Order </button>
             <br />
             <br />
 

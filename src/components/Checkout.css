@@ -22,6 +22,26 @@
     margin-left: 45%;
 }
 
+.btn {
+	margin: 2px;
+	padding: 5px;
+	z-index: 10;
+}
+.btn.active {
+    border: 1px solid black;
+    background-color: lightblue;
+}
+
+.btn.inactive {
+	border: 1px solid grey;
+	background-color: lightgrey;
+	color: grey;
+}
+
+.btn.active:hover {
+    background-color: aqua;
+}
+
 .checkout-items {}
 .checkout-item {}
 
