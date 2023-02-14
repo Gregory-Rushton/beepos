@@ -1,5 +1,6 @@
 import "./Header.css"
 import "./Checkout.css"
+import "../App.css"
 
 import { useEffect, useState } from "react";
 import { ToastsStore } from 'react-toasts'
@@ -60,7 +61,7 @@ const CreateCartItem = (element: CartItem) => {
             {subproduct.name} {product.name}
         </td>
         <td>
-            ${relation.price.toFixed(2)}
+            (${relation.price.toFixed(2)})
         </td>
         <td>
             <input type="number" min={0} defaultValue={element.amount} onChange={(event) => {updateAmount(event.target.value as unknown as number)}}/>

@@ -36,3 +36,35 @@
     transform: rotate(360deg);
   }
 }
+
+/*default styles*/
+
+button {
+	padding: 5px;
+	border: 1px solid grey;
+	background-color: #EEEEEE;
+}
+
+button.disabled {
+	color: grey;
+	border: 1px solid grey;
+}
+
+button:hover {
+	background-color: lightgrey;
+}
+
+select {
+	background-color: #EEEEEE;
+	padding: 4px;
+	border: 1px solid grey;
+}
+
+select:hover {
+	background-color: lightgrey;
+}
+
+input {
+	background-color: #FFF;
+	border: 1px solid #C0C0C0;
+}

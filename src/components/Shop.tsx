@@ -1,4 +1,5 @@
 import "./Shop.css";
+import "../App.css";
 
 import {useEffect, useState} from "react";
 import {ToastsStore} from 'react-toasts'
@@ -114,7 +115,7 @@ function ProductElement({item, position}: {item: Product, position: number}) {
                 <td>
                     <button onClick={(element) => {
                         addToCart();
-                    }} className="buyButton"> Add to Cart
+                    }}> Add to Cart
                     </button>
                 </td>
             </tr>
