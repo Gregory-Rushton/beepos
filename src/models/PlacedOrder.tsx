@@ -5,5 +5,6 @@ export interface PlacedOrder {
     isComplete: boolean,
     name: string,
     phoneNumber: string,
-    purchases: Object
+    purchases: Object,
+	paid: boolean
 }
