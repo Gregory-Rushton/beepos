@@ -16,7 +16,7 @@ function Cart() {
         html.push(<a key="checkout" href="/checkout">Checkout</a>);
         return html;
     }
- 
+
     return (
         <div className="dropdown">
             <button key={"a0"} onMouseEnter={ async() => setCartHTML(await populateCartItemList(CartService.getCartItems())) } className="dropbtn">Cart</button>

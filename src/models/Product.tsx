@@ -5,5 +5,6 @@ export interface Product {
     location: string,
     imageURL: string,
     stock: number,
+	position: number,
     relations: JSON
 }

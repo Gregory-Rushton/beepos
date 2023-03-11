@@ -181,7 +181,7 @@ function FinalizeMenu() {
                 </tbody>
             </table>
 
-            <button onClick={(event) => {placeOrder()}}> Place Order </button>
+            <button className="btn active" onClick={(event) => {placeOrder()}}> Place Order </button>
             <br />
             <br />
 
