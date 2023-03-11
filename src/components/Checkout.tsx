@@ -102,7 +102,9 @@ function CheckoutMenu() {
                         {cartItems}
                     </tbody>
                 </table>
-                Payment will be exchanged when the items are delivered 
+				<a style={{padding: "5px"}}>
+	                Payment will be exchanged when the items are delivered 
+				</a>
                 <br /><br />
             </div>
         </div>
