@@ -128,6 +128,14 @@ function ProductElement({item, position}: {item: Product, position: number}) {
 function CreateAllHTML(location: string) {
     let productsOnPage: Product[] = ProductService.getProductsByLocation(location);
 
+	productsOnPage.sort((a, b) => {
+		if(a.position == b.position) {
+			return ( a.id < b.id ? -1 : 1 );
+		} else {
+			return ( a.position < b.position ? -1 : 1 );
+		}
+	});
+
     let allHTML: JSX.Element[] = [];
 
 	for(let i=0; i<productsOnPage.length; i += 2) {

@@ -5,9 +5,7 @@ import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import {GoogleLogin} from "@react-oauth/google";
 import { ToastsStore } from 'react-toasts';
 import Cookies from 'universal-cookie';
-import jwtDecode from "jwt-decode";
 
-import * as utils from "../lib/utils";
 import {ProductService, CartService} from "../lib/utils";
 import {Credential} from '../models/Credential';
 import {Product} from "../models/Product";

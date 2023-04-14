@@ -67,7 +67,6 @@ function CheckoutMenu(order: PlacedOrder, cart: PurchasedItem[]) {
 
 function FinalizeMenu(order: PlacedOrder) {
 
-
     return (
         <div className="finalize-container">
 
@@ -98,9 +97,13 @@ function FinalizeMenu(order: PlacedOrder) {
                         <td> <label><b>Order Information</b></label> </td>
                     </tr>
                     <tr>
-                        <td> <label>Complete</label> </td>
+                        <td> <label>Status</label> </td>
                         <td> <label>{order.isComplete ? "Complete" : "Incomplete"}</label> </td>
                     </tr>
+					<tr>
+						<td> <label>Payment</label> </td>
+						<td> <label>{order.paid ? "Paid" : "Not Paid"}</label> </td>
+					</tr>
                     <tr>
                         <td> <label>Date Placed</label> </td>
                         <td> <label>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(order.date)}</label> </td>

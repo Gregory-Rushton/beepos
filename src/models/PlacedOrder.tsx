@@ -6,5 +6,6 @@ export interface PlacedOrder {
     name: string,
     phoneNumber: string,
     purchases: Object,
-    tax: string
+    tax: string,
+	paid: boolean
 }
