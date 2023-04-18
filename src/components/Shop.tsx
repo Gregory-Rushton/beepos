@@ -90,8 +90,10 @@ function ProductElement({item, position}: {item: Product, position: number}) {
             <tbody>
             <tr className="itemTitleRow">
                 <td className="itemImage"><img src={imageURL} className="itemImage" alt={item.name}/></td>
-                <td><label className="itemNameLabel">{item.name}</label> <br/> <label
-                    className="itemDescriptionLabel">{item.description}</label></td>
+                <td>
+                    <div className="itemNameLabel">{item.name}</div> <br/> 
+                    <label className="itemDescriptionLabel">{item.description}</label>
+                </td>
             </tr>
 
             <tr>
