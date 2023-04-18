@@ -92,7 +92,7 @@ function ProductElement({item, position}: {item: Product, position: number}) {
                 <td className="itemImage"><img src={imageURL} className="itemImage" alt={item.name}/></td>
                 <td>
                     <div className="itemNameLabel">{item.name}</div> <br/> 
-                    <label className="itemDescriptionLabel">{item.description}</label>
+                    <div className="itemDescriptionLabel">{item.description}</div>
                 </td>
             </tr>
 
