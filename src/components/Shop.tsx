@@ -33,7 +33,7 @@ function ProductElement({item, position}: {item: Product, position: number}) {
         let relation: Relation = utils.createRelation(item.relations[related]);
 
         setPrice(relation.price);
-        setImageURL(`${process.env.REACT_APP_CDN_URL}/relations/${item.id}/${subProductID}.png`);
+        // setImageURL(`${process.env.REACT_APP_CDN_URL}/relations/${item.id}/${subProductID}.png`);
     }
 
 	let dropdownHTML: JSX.Element[] = [];
