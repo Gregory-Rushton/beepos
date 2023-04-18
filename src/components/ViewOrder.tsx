@@ -4,23 +4,18 @@ import { simpleHeader } from "./Checkout"
 import { ProductService, CartService } from "../lib/utils";
 import { Orders } from "../lib/ajax";
 
-import { Product } from "../models/Product";
-import { Relation } from "../models/Relation";
-import { CartItem } from "../models/CartItem";
 import { PlacedOrder } from "../models/PlacedOrder";
 import { PurchasedItem } from "../models/PurchasedItem";
 
 
 const CreateCartItem = (element: PurchasedItem) => {
     
-    let product: Product = ProductService.getProduct(element.ID);
-    let subproduct: Product = ProductService.getProduct(element.subProductID);
-    let relation: Relation = ProductService.getRelation(element.ID, element.subProductID);
+
     let amount: number = element.amount;
 
     return (<tr key={`${element.ID}|${element.subProductID}`} className="checkout-item">
         <td>
-            {subproduct.name} {product.name}
+            {element.subProductName} {element.productName}
         </td>
         <td>
             (${element.price.toFixed(2)})
@@ -43,7 +38,7 @@ function CheckoutMenu(order: PlacedOrder, cart: PurchasedItem[]) {
     })
      
     let subtotal: number = CartService.getTotals(cart).cost as unknown as number;
-    let tax: number = (subtotal * (process.env.REACT_APP_TAX as any)) as number;
+    let tax: number = (subtotal * (parseFloat(order.tax) as any)) as number;
 
     cartItems.push(<tr key="a"> <td> Subtotal: </td><td/><td/><td> ${subtotal.toFixed(2)} </td>  </tr>);
     cartItems.push(<tr key="b"> <td> Tax:      </td><td/><td/><td> + ${tax.toFixed(2)}    </td>  </tr>);
