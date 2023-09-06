@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { simpleHeader } from "./Checkout"
 import { ProductService, CartService } from "../lib/utils";
 import { Orders } from "../lib/ajax";
+import {BrowserView, MobileView, isMobile} from "react-device-detect";
 
 import { PlacedOrder } from "../models/PlacedOrder";
 import { PurchasedItem } from "../models/PurchasedItem";
@@ -152,12 +153,22 @@ function ViewOrder() {
         <div>
             {header}
             <br /><br />
-            <div className="leftside-position">
-                {productHTML}
-            </div>
-            <div className="rightside-position">
-                {finalizeHTML}
-            </div>
+            <BrowserView>
+                <div className="leftside-position">
+                    {productHTML}
+                </div>
+                <div className="rightside-position">
+                    {finalizeHTML}
+                </div>
+            </BrowserView>
+            
+            <MobileView>
+                <div style={{padding: "10px"}}>
+                    {productHTML}
+                    <br />
+                    {finalizeHTML}
+                </div>
+            </MobileView>
         </div>
     );
 }
