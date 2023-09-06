@@ -1,5 +1,7 @@
 .header {
     text-align: center;
+    position: relative;
+    /* top: 50px; */
 }
 
 .react-tabs__tab {
@@ -52,7 +54,7 @@
 .dropdown {
     position: absolute;
     top: 20px;
-    right: 20%;
+    /* right: 20%; */
     display: inline-block;
 }
 /* Dropdown Content (Hidden by Default) */
@@ -74,6 +76,6 @@
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #ddd;}
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {display: block; right: 0px;}
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #ddd;}

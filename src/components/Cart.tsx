@@ -2,6 +2,7 @@ import {CartService, ProductService} from "../lib/utils";
 import * as utils from "../lib/utils";
 import {useEffect, useState} from "react";
 import {CartItem} from "../models/CartItem";
+import {isMobile} from "react-device-detect";
 
 function Cart() {
 
@@ -18,7 +19,7 @@ function Cart() {
     }
 
     return (
-        <div className="dropdown">
+        <div className="dropdown" style={{right: isMobile ? "20px" : "20%"}}>
             <button key={"a0"} onMouseEnter={ async() => setCartHTML(await populateCartItemList(CartService.getCartItems())) } className="dropbtn">Cart</button>
             <div key={"a1"} className="dropdown-content">
                 {cartHTML}

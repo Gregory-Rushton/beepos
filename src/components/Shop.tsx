@@ -2,7 +2,8 @@ import "./Shop.css";
 import "../App.css";
 
 import {useEffect, useState} from "react";
-import {ToastsStore} from 'react-toasts'
+import {ToastsStore} from 'react-toasts';
+import {isMobile} from 'react-device-detect';
 
 import * as utils from "../lib/utils";
 import {Product} from "../models/Product";
@@ -84,9 +85,14 @@ function ProductElement({item, position}: {item: Product, position: number}) {
 		}
     }, []);
 
+    //determine the width depending on if its on mobile
+    let width = "375px";
+    if(isMobile) {
+        width = "100%";
+    }
 
     return (
-        <table className="itemTable" key={position}>
+        <table className="itemTable" key={position} style={{width: width}}>
             <tbody>
             <tr className="itemTitleRow">
                 <td className="itemImage"><img src={imageURL} className="itemImage" alt={item.name}/></td>
@@ -139,24 +145,40 @@ function CreateAllHTML(location: string) {
 	});
 
     let allHTML: JSX.Element[] = [];
+    if(!isMobile) {
 
-	for(let i=0; i<productsOnPage.length; i += 2) {
+        //Desktop View (2 items per row)
+        for(let i=0; i<productsOnPage.length; i += 2) {
 
-		let secondElement;
-		if(i+1 < productsOnPage.length) {
-			secondElement = <ProductElement key={i+1} item={productsOnPage[i+1]} position={i+1} />;
-		}
-		allHTML.push(
-		<tr className="displayTable tr">
-			<td className="displayTable td">
-				<ProductElement key={i} item={productsOnPage[i]} position={i} />
-			</td>
-			<td className="displayTable td">
-				{secondElement}
-			</td>
-		</tr>);
+            let secondElement;
+            if(i+1 < productsOnPage.length) {
+                secondElement = <ProductElement key={i+1} item={productsOnPage[i+1]} position={i+1} />;
+            }
+            allHTML.push(
+            <tr className="displayTable tr">
+                <td className="displayTable td">
+                    <ProductElement key={i} item={productsOnPage[i]} position={i} />
+                </td>
+                <td className="displayTable td">
+                    {secondElement}
+                </td>
+            </tr>);
+        }
+    } else {
+        //Mobile View (1 item per row)
+        
+        for(let i = 0; i<productsOnPage.length; i++) {
+            allHTML.push(
+            <tr className="displayTable tr" key={`${i}r`}>
+                <td className="displayTable td" key={`${i}d`}>
+                    <ProductElement key={i} item={productsOnPage[i]} position={i} />
+                </td>
+            </tr>);
+        }
 
-	}
+    }
+
+	
 
     return (
 		<div>
