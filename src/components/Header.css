@@ -1,5 +1,7 @@
 .header {
     text-align: center;
+    position: relative;
+    /* top: 50px; */
 }
 
 .react-tabs__tab {

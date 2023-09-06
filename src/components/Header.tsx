@@ -5,6 +5,7 @@ import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import {GoogleLogin} from "@react-oauth/google";
 import { ToastsStore } from 'react-toasts';
 import Cookies from 'universal-cookie';
+import {isMobile} from 'react-device-detect';
 
 import {ProductService, CartService} from "../lib/utils";
 import {Credential} from '../models/Credential';
@@ -53,7 +54,7 @@ function Header() {
 
     return (
         <div>
-            <div className='header'>
+            <div className='header' style={{top: isMobile ? "50px" : ""}}>
                 <h1>Bee Positive Apiary</h1>
                 <Tabs selectedIndex={tabIndex} onSelect={(index) => loadTab(index)}>
                     <TabList>
