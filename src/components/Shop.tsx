@@ -168,11 +168,12 @@ function CreateAllHTML(location: string) {
         //Mobile View (1 item per row)
         
         for(let i = 0; i<productsOnPage.length; i++) {
-            allHTML.push(<tr className="displayTable tr">
-            <td className="displayTable td">
-                <ProductElement key={i} item={productsOnPage[i]} position={i} />
-            </td>
-        </tr>);
+            allHTML.push(
+            <tr className="displayTable tr" key={`${i}r`}>
+                <td className="displayTable td" key={`${i}d`}>
+                    <ProductElement key={i} item={productsOnPage[i]} position={i} />
+                </td>
+            </tr>);
         }
 
     }

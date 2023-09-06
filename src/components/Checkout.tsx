@@ -5,6 +5,7 @@ import "../App.css"
 import { useEffect, useState } from "react";
 import { ToastsStore } from 'react-toasts'
 import { AxiosError } from 'axios';
+import {BrowserView, MobileView, isMobile} from "react-device-detect";
 
 import { CartService, ProductService } from "../lib/utils";
 import { Orders } from "../lib/ajax"
@@ -204,12 +205,23 @@ function Checkout() {
     return (
         <div>
             {simpleHeader("Checkout")}
-            <div className="leftside-position">
-                {checkoutMenuHTML}
-            </div>
-            <div className="rightside-position">
-                <FinalizeMenu />
-            </div>
+            <BrowserView>
+                <div className="leftside-position">
+                    {checkoutMenuHTML}
+                </div>
+                <div className="rightside-position">
+                    <FinalizeMenu />
+                </div>
+            </BrowserView>
+
+            <MobileView>
+                <div style={{padding: "10px"}}>
+                    {checkoutMenuHTML}
+                    <br />
+                    <FinalizeMenu />
+                </div>
+            </MobileView>
+
          </div>
     );
 }
