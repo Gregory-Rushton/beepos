@@ -17,8 +17,8 @@ import { CreateOrderResponse } from "../models/CreateOrderResponse";
 
 export function simpleHeader(title: string) {
     return (
-        <div>
-            <div className="header" style={{border: "1px solid black"}}>
+        <div style={{width: "100%"}}>
+            <div className="header" style={{borderBottom: "1px solid black"}}>
                 <h1> <a onClick={(e) => {window.location.href="/"}}>Bee Positive Apiary</a></h1>
             </div>
 
@@ -36,7 +36,7 @@ const CreateCartItem = (element: CartItem) => {
     const [product, setProduct] = useState<Product>({} as Product);
     const [subproduct, setSubproduct] = useState<Product>({} as Product);
     const [relation, setRelation] = useState<Relation>({"price": 0} as Relation);
-    const [textColor, setTextColor] = useState<Object>({"color": "black"} as Object);
+    const [textColor, setTextColor] = useState<string>("black");
 
     const updateAmount = (newAmount: number) => {
         newAmount = Math.max(0, newAmount);
@@ -45,7 +45,7 @@ const CreateCartItem = (element: CartItem) => {
         let cart: CartItem[] = CartService.setItemAmount(CartService.getCartItems(), element.ID, element.subProductID, newAmount);
         CartService.saveCart(cart);
 
-        setTextColor({"color": newAmount===0 ? "grey" : "black"} as Object);
+        setTextColor(newAmount===0 ? "grey" : "black");
     }
 
     useEffect(() => {
@@ -53,19 +53,30 @@ const CreateCartItem = (element: CartItem) => {
         setProduct(ProductService.getProduct(element.ID));
         setSubproduct(ProductService.getProduct(element.subProductID));
         setRelation(ProductService.getRelation(element.ID, element.subProductID));
-        setTextColor({"color": element.amount===0 ? "grey" : "black"} as Object);
+        setTextColor(element.amount===0 ? "grey" : "black");
     }, [])
 
 
-    return (<tr key={`${element.ID}|${element.subProductID}`} className="checkout-item" style={textColor}>
+    return (<tr key={`${element.ID}|${element.subProductID}`} className="checkout-item" style={{color: textColor}}>
         <td>
             {subproduct.name} {product.name}
         </td>
+
         <td>
+            {/* <BrowserView> */}
             (${relation.price.toFixed(2)})
+            {/* </BrowserView> */}
         </td>
-        <td>
-            <input type="number" min={0} defaultValue={element.amount} onChange={(event) => {updateAmount(event.target.value as unknown as number)}}/>
+        <td style={{minWidth: isMobile ? "100px" : "75px"}}>
+            <BrowserView>
+            <input style={{width: "50px"}} type="number" min={0} defaultValue={element.amount} onChange={(event) => {updateAmount(event.target.value as unknown as number)}}/>
+            </BrowserView>  
+
+            <MobileView>
+            <button className="quantityButtonMobile" onClick={(e) => {updateAmount(amount-1)}}>-</button>        
+            <input className="quantityBoxMobile" type="number" min={0} value={element.amount} defaultValue={element.amount} onChange={(event) => {updateAmount(event.target.value as unknown as number)}}/>
+            <button className="quantityButtonMobile" onClick={(e) => {updateAmount(amount+1)}}>+</button>
+            </MobileView>
         </td>
         <td>
             (${(amount * relation.price).toFixed(2)})
@@ -86,7 +97,7 @@ function CheckoutMenu() {
     let subtotal: number = CartService.getTotals(cart).cost as unknown as number;
     let tax: number = (subtotal * (process.env.REACT_APP_TAX as any)) as number;
 
-    cartItems.push(<tr key="a"> <td> Subtotal: </td><td/><td/><td> ${subtotal.toFixed(2)} </td>  </tr>)
+    cartItems.push(<tr key="a"> <td> Subtotal: </td> <td/> <td/> <td> ${subtotal.toFixed(2)} </td>  </tr>)
     cartItems.push(<tr key="b"> <td> Tax:      </td><td/><td/><td> + ${tax.toFixed(2)}    </td>  </tr>)
     cartItems.push(<tr key="c"> <td> Total:    </td><td/><td/><td> ${(subtotal + tax).toFixed(2)}    </td>  </tr>)
 

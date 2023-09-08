@@ -3,13 +3,13 @@ import "../App.css";
 
 import {useEffect, useState} from "react";
 import {ToastsStore} from 'react-toasts';
-import {isMobile} from 'react-device-detect';
+import {MobileView, BrowserView, isMobile} from 'react-device-detect';
 
 import * as utils from "../lib/utils";
 import {Product} from "../models/Product";
 import {Relation} from "../models/Relation";
 import {CartItem} from "../models/CartItem";
-import {ProductService, CartService} from "../lib/utils";
+import {ProductService, CartService, clamp} from "../lib/utils";
 
 
 //The honey and items shop code is too similar it can be put into one file
@@ -19,12 +19,12 @@ function ProductElement({item, position}: {item: Product, position: number}) {
 
     const [price, setPrice] = useState(0.0);
     const [imageURL, setImageURL] = useState(`${process.env.REACT_APP_CDN_URL}/products/${item.id[0]}00/${item.id.slice(1)}.png`);
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState<number>(1);
     const [selectedSubProduct, setSelectedSubProduct] = useState("");
 	const [stockNotifier, setStockNotifier] = useState(<a></a>);
 
     const handleCountChange = (event: any) => {
-        setQuantity(event.target.value);
+        setQuantity(parseInt(event.target.value));
     }
 
     const updateSubProduct = (subProductID: string) => {
@@ -69,21 +69,25 @@ function ProductElement({item, position}: {item: Product, position: number}) {
     );
 
     useEffect(() => {
-		try {
+		try { //try to get 0th relation (the items price)
 			let firstRelation: keyof typeof item.relations = dropdownHTML[0].props.value;
 			let relation: Relation = utils.createRelation(item.relations[firstRelation]);
 			setPrice(relation.price);
 			setSelectedSubProduct(firstRelation.toString());
-		} catch {
+		} catch { //else set the price to zero (it will say no price)
 			setPrice(0);
 			setSelectedSubProduct("0");
 		}
-		if(item.stock <= 5 && item.stock > 0 && item.stock != null) {
+		if(item.stock <= 5 && item.stock > 0 && item.stock != null) { //update the notifier for the stock
 			setStockNotifier(<label>Only {item.stock} Left!</label>);
 		} else if (item.stock == 0) {
 			setStockNotifier(<label>Item is out of stock</label>)
 		}
     }, []);
+
+    useEffect(() => {
+        setQuantity(clamp(1, quantity, item.stock))
+    }, [quantity])
 
     //determine the width depending on if its on mobile
     let width = "375px";
@@ -112,7 +116,19 @@ function ProductElement({item, position}: {item: Product, position: number}) {
                 </td>
 
                 <td style={{textAlign: 'right'}}>
-                    <input onChange={event => handleCountChange(event)} defaultValue={1 as number} min={1} type="number" className="quantityBox"/> Quantity
+                    <BrowserView>
+                        <input onChange={event => handleCountChange(event)} defaultValue={1 as number} min={1} type="number" className="quantityBox"/> Quantity
+                    </BrowserView>
+
+                    <MobileView>
+                        
+                        <button className="quantityButtonMobile" onClick={(e) => {setQuantity(quantity-1)}}>-</button>
+                        <input onChange={event => handleCountChange(event)} value={quantity} defaultValue={1 as number} min={1} type="number" className="quantityBoxMobile"/> 
+                        <button className="quantityButtonMobile" onClick={(e) => {setQuantity(quantity+1)}}>+</button>
+                        
+                        <br />Quantity
+                    </MobileView>
+                    
                 </td>
             </tr>
 
