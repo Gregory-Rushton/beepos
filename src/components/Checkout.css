@@ -48,7 +48,7 @@
 .checkout-items table {
     text-align: left;
     margin: auto;
-    padding-left: 50px;
+    padding-left: 30px;
     padding-right: 50px;
     padding-bottom: 35px;
 }
@@ -58,9 +58,9 @@
     min-width: 75px;
 }
 
-.checkout-item input {
-    width: 50px;
-}
+/* .checkout-item input {
+    width: 30px; */
+/* } */
 
 /*Finalize Menu*/
 

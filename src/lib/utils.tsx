@@ -141,3 +141,5 @@ export const CartService = {
 export function createRelation(relation: Object) {
     return ((relation as Relation));
 }
+
+export const clamp = (min: number, num: number, max: number) => Math.min(Math.max(num, min), max);
