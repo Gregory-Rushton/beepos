@@ -123,7 +123,7 @@ function ProductElement({item, position}: {item: Product, position: number}) {
                     <MobileView>
                         
                         <button className="quantityButtonMobile" onClick={(e) => {setQuantity(quantity-1)}}>-</button>
-                        <input onChange={event => handleCountChange(event)} value={quantity} defaultValue={1 as number} min={1} type="number" className="quantityBoxMobile"/> 
+                        <input onChange={event => handleCountChange(event)} value={quantity}  min={1} type="number" className="quantityBoxMobile"/> 
                         <button className="quantityButtonMobile" onClick={(e) => {setQuantity(quantity+1)}}>+</button>
                         
                         <br />Quantity

@@ -1,5 +1,7 @@
+body,
 html {
 	overflow-y: scroll;
+  width: 100%;
 }
 
 .App { 
