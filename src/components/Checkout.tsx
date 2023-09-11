@@ -1,6 +1,6 @@
+import "../App.css"
 import "./Header.css"
 import "./Checkout.css"
-import "../App.css"
 
 import { useEffect, useState } from "react";
 import { ToastsStore } from 'react-toasts'
@@ -74,7 +74,7 @@ const CreateCartItem = (element: CartItem) => {
 
             <MobileView>
             <button className="quantityButtonMobile" onClick={(e) => {updateAmount(amount-1)}}>-</button>        
-            <input className="quantityBoxMobile" type="number" min={0} value={element.amount} defaultValue={element.amount} onChange={(event) => {updateAmount(event.target.value as unknown as number)}}/>
+            <input className="quantityBoxMobile" type="number" min={0} value={element.amount} onChange={(event) => {updateAmount(event.target.value as unknown as number)}}/>
             <button className="quantityButtonMobile" onClick={(e) => {updateAmount(amount+1)}}>+</button>
             </MobileView>
         </td>
@@ -188,12 +188,10 @@ function FinalizeMenu() {
                         <td> <label>Street</label> </td>
                         <td> <input onChange={(event) => {setStreet(event.target.value as unknown as string)}}/> </td>
                     </tr>
-                    
-
                 </tbody>
             </table>
 
-            <button className="btn active" onClick={(event) => {placeOrder()}}> Place Order </button>
+            <button className="btn active" onClick={(event) => {placeOrder()}}>Place Order</button>
             <br />
             <br />
 
