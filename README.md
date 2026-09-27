@@ -1,4 +1,39 @@
-# Getting Started with Create React App
+# Bee Positive Apiary website
+
+The live site is plain HTML in [`docs/`](docs/). GitHub Pages serves it from the
+`main` branch, `/docs` folder, at <https://beepositiveapiary.com>.
+
+## Preview locally
+
+```bash
+python3 -m http.server 8080 -d docs
+```
+
+Then open <http://localhost:8080>.
+
+## GitHub Pages setup (one time)
+
+1. In **Settings > Pages**, set **Source** to "Deploy from a branch", branch `main`, folder `/docs`.
+2. Set **Custom domain** to `beepositiveapiary.com`. (`docs/CNAME` holds the same value.)
+3. At the DNS provider, add these records for the apex domain:
+
+   | Type  | Host  | Value                     |
+   |-------|-------|---------------------------|
+   | A     | `@`   | `185.199.108.153`         |
+   | A     | `@`   | `185.199.109.153`         |
+   | A     | `@`   | `185.199.110.153`         |
+   | A     | `@`   | `185.199.111.153`         |
+   | AAAA  | `@`   | `2606:50c0:8000::153`     |
+   | AAAA  | `@`   | `2606:50c0:8001::153`     |
+   | AAAA  | `@`   | `2606:50c0:8002::153`     |
+   | AAAA  | `@`   | `2606:50c0:8003::153`     |
+   | CNAME | `www` | `gregory-rushton.github.io` |
+
+4. After DNS resolves, turn on **Enforce HTTPS** in **Settings > Pages**.
+
+---
+
+# Legacy React app (not in use)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
