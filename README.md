@@ -17,6 +17,7 @@ GitHub Pages serves it from the `main` branch, `/docs` folder, at
 | `docs/products.html`  | Products page with links for buying          |
 | `docs/style.css`      | Shared styles                                |
 | `docs/images/`        | Photos used on the pages                     |
+| `docs/fonts/`         | Dancing Script (wordmark font) and its license |
 | `docs/404.html`       | Page shown for missing URLs                  |
 | `docs/CNAME`          | Custom domain for GitHub Pages               |
 

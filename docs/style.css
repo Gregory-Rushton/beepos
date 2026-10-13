@@ -1,34 +1,61 @@
 *, *::before, *::after { box-sizing: border-box; }
 
+/* Dancing Script, self-hosted. SIL Open Font License: see /fonts/DancingScript-OFL.txt */
+@font-face {
+  font-family: "Dancing Script";
+  src: url("/fonts/dancing-script-latin-600-normal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Palette taken from the Bee Positive jar label:
+   navy background, honey gold and orange accents, cream label panel. */
 :root {
-  --text: #111;
-  --muted: #555;
-  --bg: #fff;
-  --line: #e5e5e5;
+  --navy: #1b2436;
+  --gold: #e3a83b;
+  --orange: #d8742a;   /* decorative only: too low-contrast for text on cream */
+  --cream: #fbf7ee;
+
+  --text: var(--navy);
+  --muted: #5a6072;
+  --bg: var(--cream);
+  --line: #e7dfcc;
   --max: 960px;
 }
 
 body {
   margin: 0;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color: var(--text);
   background: var(--bg);
   line-height: 1.6;
+  /* Keep the footer at the bottom of short pages. */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-a { color: inherit; }
+a { color: inherit; text-decoration-color: var(--gold); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* Header */
 
 .site-header {
   position: sticky;
   top: 0;
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
+  z-index: 10;
+  background: var(--navy);
+  color: var(--cream);
+  border-bottom: 3px solid var(--gold);
 }
 
 .site-header .inner {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 16px;
+  padding: 12px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -41,14 +68,30 @@ a { color: inherit; }
   text-decoration: none;
   text-transform: uppercase;
   font-size: 0.85rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
 }
 
-.site-header nav a[aria-current="page"] { text-decoration: underline; }
+.site-header nav a:hover { border-bottom-color: rgba(227, 168, 59, 0.6); }
+.site-header nav a[aria-current="page"] { color: var(--gold); border-bottom-color: var(--gold); }
 
-.brand { font-weight: 700; text-decoration: none; }
+/* The wordmark matches the lowercase script on the label. */
+.brand {
+  font-family: "Dancing Script", Georgia, serif;
+  font-weight: 600;
+  font-size: 1.7rem;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: lowercase;
+  color: var(--cream);
+}
+
+/* Content */
 
 main {
+  flex: 1;
+  width: 100%;
   max-width: var(--max);
   margin: 0 auto;
   padding: 48px 16px 64px;
@@ -56,7 +99,35 @@ main {
 
 .intro { max-width: 560px; margin: 0 auto; }
 
-h1 { font-size: 1.6rem; line-height: 1.25; margin: 0 0 16px; }
+h1 { font-size: 1.75rem; line-height: 1.25; margin: 0 0 16px; }
+
+/* A short gold rule under page titles, like the hexagon frame on the label. */
+h1::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 3px;
+  margin-top: 12px;
+  background: linear-gradient(90deg, var(--gold), var(--orange));
+  border-radius: 2px;
+}
+
+.photo {
+  margin: 32px 0 0;
+}
+
+.photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+.photo figcaption {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
 
 .products { display: grid; gap: 48px; margin-top: 48px; }
 
@@ -71,22 +142,25 @@ h1 { font-size: 1.6rem; line-height: 1.25; margin: 0 0 16px; }
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
-.product h2 { font-size: 1.8rem; margin: 0 0 8px; }
+.product h2 { font-size: 1.35rem; line-height: 1.3; margin: 0 0 8px; }
 .product p { margin: 0; color: var(--muted); }
 
+/* Footer */
+
 .site-footer {
-  border-top: 1px solid var(--line);
+  background: var(--navy);
+  color: #c8ccd6;
   padding: 24px 16px;
   text-align: center;
   font-size: 0.85rem;
-  color: var(--muted);
 }
 
 @media (max-width: 640px) {
-  .site-header .inner { flex-direction: column-reverse; }
+  .site-header .inner { flex-direction: column-reverse; gap: 8px; }
   .product { grid-template-columns: 1fr; gap: 16px; }
-  .product h2 { font-size: 1.4rem; }
+  h1 { font-size: 1.5rem; }
+  .product h2 { font-size: 1.2rem; }
 }
