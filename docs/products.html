@@ -23,6 +23,78 @@
   <meta name="theme-color" content="#1b2436">
   <link rel="preload" href="/fonts/dancing-script-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://beepositiveapiary.com/#business",
+        "name": "Bee Positive Apiary",
+        "url": "https://beepositiveapiary.com/",
+        "image": "https://beepositiveapiary.com/images/bee.jpg",
+        "logo": "https://beepositiveapiary.com/android-chrome-512x512.png",
+        "description": "A small, family operated apiary keeping bees in Easton and Norton, Massachusetts.",
+        "foundingDate": "2019",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Easton",
+          "addressRegion": "MA",
+          "addressCountry": "US"
+        },
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Easton, MA"
+          },
+          {
+            "@type": "City",
+            "name": "Norton, MA"
+          }
+        ],
+        "paymentAccepted": "Venmo"
+      },
+      {
+        "@type": "Product",
+        "name": "Raw honey, 1 lb",
+        "description": "Raw, unfiltered honey from Bee Positive Apiary in Easton and Norton, MA.",
+        "image": "https://beepositiveapiary.com/images/honey-1lb.jpg",
+        "brand": {
+          "@type": "Brand",
+          "name": "Bee Positive Apiary"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "20.00",
+          "priceCurrency": "USD",
+          "url": "https://beepositiveapiary.com/products.html",
+          "seller": {
+            "@id": "https://beepositiveapiary.com/#business"
+          }
+        }
+      },
+      {
+        "@type": "Product",
+        "name": "Raw honey, 2 lb",
+        "description": "Raw, unfiltered honey from Bee Positive Apiary in Easton and Norton, MA.",
+        "image": "https://beepositiveapiary.com/images/honey-2lb.jpg",
+        "brand": {
+          "@type": "Brand",
+          "name": "Bee Positive Apiary"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "35.00",
+          "priceCurrency": "USD",
+          "url": "https://beepositiveapiary.com/products.html",
+          "seller": {
+            "@id": "https://beepositiveapiary.com/#business"
+          }
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -43,7 +115,10 @@
 
     <section class="products">
       <article class="product">
-        <img src="/images/honey-1lb.jpg" width="1200" height="900" alt="A 1 lb jar of Bee Positive Apiary honey">
+        <picture>
+          <source type="image/webp" srcset="/images/honey-1lb-600.webp 600w, /images/honey-1lb-1200.webp 1200w" sizes="(max-width: 640px) calc(100vw - 32px), 448px">
+          <img src="/images/honey-1lb.jpg" width="1200" height="900" alt="A 1 lb jar of Bee Positive Apiary honey">
+        </picture>
         <div>
           <h2>Honey, 1 lb, $20</h2>
           <p>Raw, unfiltered honey</p>
@@ -51,7 +126,10 @@
       </article>
 
       <article class="product">
-        <img src="/images/honey-2lb.jpg" width="1200" height="900" alt="A 2 lb jar of Bee Positive Apiary honey" loading="lazy">
+        <picture>
+          <source type="image/webp" srcset="/images/honey-2lb-600.webp 600w, /images/honey-2lb-1200.webp 1200w" sizes="(max-width: 640px) calc(100vw - 32px), 448px">
+          <img src="/images/honey-2lb.jpg" width="1200" height="900" alt="A 2 lb jar of Bee Positive Apiary honey" loading="lazy">
+        </picture>
         <div>
           <h2>Honey, 2 lb, $35</h2>
           <p>Raw, unfiltered honey</p>

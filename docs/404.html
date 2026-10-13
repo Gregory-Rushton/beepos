@@ -3,10 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
   <title>Page not found | Bee Positive Apiary</title>
   <link rel="icon" href="/favicon.ico">
   <link rel="preload" href="/fonts/dancing-script-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/style.css">
+  <script>
+    // The site used to be on Weebly/Square. Send old store and about links
+    // to the matching page here instead of leaving visitors on a 404.
+    (function () {
+      var p = location.pathname.toLowerCase();
+      if (/^\/(store|shop|products?)(\/|\.html?$|$)/.test(p)) {
+        location.replace("/products.html");
+      } else if (/^\/(home|about|about-us|index)(\.html?)?\/?$/.test(p)) {
+        location.replace("/");
+      }
+    })();
+  </script>
 </head>
 <body>
   <header class="site-header">

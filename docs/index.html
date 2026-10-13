@@ -23,6 +23,36 @@
   <meta name="theme-color" content="#1b2436">
   <link rel="preload" href="/fonts/dancing-script-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://beepositiveapiary.com/#business",
+    "name": "Bee Positive Apiary",
+    "url": "https://beepositiveapiary.com/",
+    "image": "https://beepositiveapiary.com/images/bee.jpg",
+    "logo": "https://beepositiveapiary.com/android-chrome-512x512.png",
+    "description": "A small, family operated apiary keeping bees in Easton and Norton, Massachusetts.",
+    "foundingDate": "2019",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Easton",
+      "addressRegion": "MA",
+      "addressCountry": "US"
+    },
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "Easton, MA"
+      },
+      {
+        "@type": "City",
+        "name": "Norton, MA"
+      }
+    ],
+    "paymentAccepted": "Venmo"
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -42,7 +72,10 @@
       <p>We strive to keep our bees healthy in an ethical and sustainable manner. We work closely with local beekeeping clubs and other beekeepers to help educate the public about the benefits of bees and other pollinators.</p>
 
       <figure class="photo">
-        <img src="/images/bee.jpg" width="1024" height="768" alt="A honeybee with a load of yellow pollen on its leg, resting on a fingertip">
+        <picture>
+          <source type="image/webp" srcset="/images/bee-560.webp 560w, /images/bee-1024.webp 1024w" sizes="(max-width: 592px) calc(100vw - 32px), 560px">
+          <img src="/images/bee.jpg" width="1024" height="768" alt="A honeybee with a load of yellow pollen on its leg, resting on a fingertip">
+        </picture>
       </figure>
     </section>
   </main>
