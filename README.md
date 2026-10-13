@@ -14,7 +14,10 @@ GitHub Pages serves it from the `main` branch, `/docs` folder, at
 | File                  | What it is                                   |
 |-----------------------|----------------------------------------------|
 | `docs/index.html`     | Home page                                    |
+| `docs/about.html`     | About our bees: yards, harvests, colony health |
 | `docs/products.html`  | Products page with links for buying          |
+| `docs/faq.html`       | Honey FAQ                                    |
+| `docs/education.html` | Events & education, helping pollinators      |
 | `docs/style.css`      | Shared styles                                |
 | `docs/images/`        | Photos: original JPEGs plus WebP sizes (see below) |
 | `docs/fonts/`         | Dancing Script (wordmark font) and its license |
